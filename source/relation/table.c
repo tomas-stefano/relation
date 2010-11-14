@@ -8,7 +8,7 @@ RelationTable new_relation_table(char *table_name) {
 }
 
 SelectManager relation_table_from(RelationTable table) {
-	SelectManager manager;// = new_select_manager(table);
+	SelectManager manager; // = new_select_manager(table);
 	return manager;
 }
 

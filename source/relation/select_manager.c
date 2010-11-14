@@ -1,6 +1,12 @@
 #include "relation.h"
 #include "relation/select_manager.h"
 
+SelectManager new_select_manager(RelationTable table) {
+	SelectManager select_manager;
+	select_manager.abstract_syntax_tree.froms = table;
+	return select_manager;
+}
+
 SelectManager select_manager_from(SelectManager select_manager, RelationTable table) {
 	// In Ruby
 	// ctx.froms  = table

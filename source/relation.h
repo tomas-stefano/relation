@@ -11,10 +11,12 @@ typedef char *SqlLiteral;
 
 typedef struct select_statement {
 	int limit;
-	SqlLiteral *projections; /* pointer to SqlLiteral (and SqlLiteral in pointer to char - aka String) */
+	SqlLiteral *projections;
+	RelationTable froms;
 } SelectStatement;
 	
 typedef struct manager_select {
+	SelectStatement abstract_syntax_tree;
 } SelectManager;
 
 
