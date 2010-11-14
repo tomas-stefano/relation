@@ -29,7 +29,7 @@ module Color
   end  
 end
 
-module RelationTasks
+module RelationTasks 
 
   def compile(files, options={})
     return if files.empty?
@@ -63,7 +63,7 @@ namespace :compile do
 end
 
 task :compile_tests do
-  sh "cc -Wall -O3 -g #{OBJECT_TEST_UNITS_SOURCE} #{OBJECT_SOURCE} -lcgreen -o #{TEST_EXECUTABLE}"
+  sh "cc -Wall -Wextra -O3 -g #{OBJECT_TEST_UNITS_SOURCE} #{OBJECT_SOURCE} -lcgreen -o #{TEST_EXECUTABLE}"
 end
 
 task :call_executable do

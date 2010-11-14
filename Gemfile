@@ -3,3 +3,4 @@ source :rubygems
 
 gem 'rake'
 gem 'guard'
+gem 'notifiers'

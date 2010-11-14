@@ -27,8 +27,7 @@
 /*
 *  To run tests just type in the terminal: 
 *
-*   rake test
-*
+*  rake test
 *
 */
 
@@ -36,7 +35,10 @@
 TestSuite *relation_suite();
 
 /* Nodes Suite */
-TestSuite *select_statements_test();
+TestSuite *select_statement_suite();
+	
+/* Visitors Suite */
+TestSuite *visitor_to_sql_suite();
 
 /* Managers Suite */
 TestSuite *relation_table_suite();
@@ -49,12 +51,16 @@ int main(int argc, char **argv) {
 	add_suite(suite, relation_suite());
 	
 	/* Nodes Suite */
-	add_suite(suite, select_statements_test());
+	add_suite(suite, select_statement_suite());
+
+	/* Visitors Suite */
+	add_suite(suite, visitor_to_sql_suite());
 	
 	/* Managers Suite */
 	add_suite(suite, relation_table_suite());
 	add_suite(suite, select_manager_suite());
 	add_suite(suite, sql_literal_suite());
+
 	if (argc > 1)
 	  return run_single_test(suite, argv[1], create_text_reporter());
 	else	

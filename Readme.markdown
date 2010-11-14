@@ -1,3 +1,4 @@
+
 # Relation C Library
 
 ## Description
@@ -7,7 +8,9 @@ Simplifies the generation complex of SQL queries.
 
 ### Based on Arel 2.0.2.
 
+## Benchmarks
+
 ## Why I created this library:
 
-* It was a motivation to learn C language
-* It was a motivation to learn how Arel does internally
+* It was a <b>motivation</b> to learn C language
+* It was a <b>motivation</b> to learn how Arel does internally
