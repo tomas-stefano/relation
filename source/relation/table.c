@@ -7,21 +7,27 @@ RelationTable new_relation_table(char *table_name) {
 	return relation;
 }
 
-char *relation_table_primary_key(RelationTable relation) {
+SelectManager relation_table_from(RelationTable table) {
+	SelectManager manager;// = new_select_manager(table);
+	return manager;
+}
+
+char *relation_table_primary_key(RelationTable table) {
 	return "id";
 }
 
-SelectManager relation_table_select_manager(RelationTable relation) {
+SelectManager relation_table_select_manager(RelationTable table) {
 	SelectManager manager;
 	return manager;
 }
 
-SelectManager relation_table_project(RelationTable relation, char *literal) {
+SelectManager relation_table_project(RelationTable table, char *literal) {
 	SelectManager manager;
 	return manager;
 }
 
-SelectManager relation_table_limit(RelationTable relation, int limit_number) {
+SelectManager relation_table_limit(RelationTable table, int limit_number) {
 	SelectManager manager;
+	manager = relation_table_from(table);
 	return manager;
 }
