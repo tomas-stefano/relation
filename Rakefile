@@ -1,10 +1,10 @@
 
 TEST_EXECUTABLE = 'sql_relation_test_suite'
 
-SOURCE = FileList['source/*.c']
+SOURCE = FileList['source/*.c', 'source/*/*.c', 'source/*/*/*.c']
 OBJECT_SOURCE = SOURCE.ext('o')
 
-TEST_UNITS_SOURCE = FileList['tests/*/*.c', 'tests/*.c']
+TEST_UNITS_SOURCE = FileList['tests/*.c', 'tests/*/*.c', 'tests/*/*/*.c']
 OBJECT_TEST_UNITS_SOURCE = TEST_UNITS_SOURCE.ext('o')
 
 module Color
@@ -31,71 +31,82 @@ end
 
 module RelationTasks
 
-  def compile(files, options={}, extra_options='')
+  def compile(files, options={})
     return if files.empty?
     directory = options[:dir]
+    extra_options = options[:extra_options]
     files.each do |source_file|
       object_file = source_file.ext('o')
       print Color.light_blue
-      sh "cc -g -Wall -I source -c -o #{object_file} #{source_file}"
+      sh "cc -g -Wall -O3 -I source #{extra_options} -c -o #{object_file} #{source_file}"
       print Color.no_color
     end
   end
-  
-  def compile_source
-    compile(SOURCE, :dir => 'source')
-  end
-  
-  def compile_tests
-    compile(TEST_UNITS_SOURCE, :dir => 'tests')
-  end  
 end
 
 namespace :compile do
   desc 'Compile source files'
   task :source do
     include RelationTasks
-    compile_source
+    files = [ENV["FILE"]].compact
+    files = files.empty? ? SOURCE : files
+    compile(files, :dir => 'source')
   end
   
   desc 'Compile test files'
   task :tests => :source do
     include RelationTasks
-    compile_tests
+    files = [ENV["TEST_FILE"]].compact
+    files = files.empty? ? TEST_UNITS_SOURCE : files    
+    compile(files, :dir => 'tests', :extra_options => '-I tests')
   end
 end
 
 task :compile_tests do
-  sh "cc -Wall -g #{OBJECT_TEST_UNITS_SOURCE} #{OBJECT_SOURCE} -lcgreen -o #{TEST_EXECUTABLE}"
+  sh "cc -Wall -O3 -g #{OBJECT_TEST_UNITS_SOURCE} #{OBJECT_SOURCE} -lcgreen -o #{TEST_EXECUTABLE}"
 end
 
 task :call_executable do
   sh "./#{TEST_EXECUTABLE}"
 end
 
+def fail?
+  $!
+end
+
+def run_tests
+  print Color.light_blue
+  Rake::Task["compile_tests"].invoke
+  output = (Color.green + ('=' * 20) + ' Running Tests ' + ("="*20) + Color.no_color)
+  puts
+  puts output
+  puts
+  Rake::Task["call_executable"].invoke
+end
+
 desc 'Run all Test Suite'
 file :test => 'compile:tests' do
   begin
-    print Color.light_blue
-    Rake::Task["compile_tests"].invoke
-    puts
-    puts (Color.green + ('=' * 20) + ' Running Tests ' + ("="*20) + Color.no_color)
-    puts
-    Rake::Task["call_executable"].invoke
+    run_tests
   ensure
+    verbose(false) # Set rake to false
+    output = ('=' * 20) + ' Done ' + ("=" * 29) + Color.no_color
+    if fail? 
+      puts Color.red + output
+    else
+      puts Color.green + output
+    end
     puts
-    puts (Color.green + ('=' * 20) + ' Done ' + ("=" * 29) + Color.no_color)    
     puts
-    puts    
-    Rake::Task['clean'].invoke
-    Rake::Task['clobber'].invoke
   end
 end
 
 require 'rake/clean'
 CLEAN.include('tests/*.o', 
               'tests/*/*.o',
-              'source/*.o', '*.o'
+              'tests/*/*/*.o',
+              'source/*.o', '*.o',
+              'source/*/*.o', 'source/*/*/*.o'
               )
 CLOBBER.include(TEST_EXECUTABLE)
 

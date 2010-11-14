@@ -1,6 +1,4 @@
-#include "select_manager.h"
-#include "sql_literal.h"
-#include "table.h"
+#include "relation.h"
 
 RelationTable new_relation_table(char *table_name) {
 	RelationTable relation;
@@ -17,7 +15,7 @@ SelectManager relation_table_select_manager(RelationTable relation) {
 	return manager;
 }
 
-SelectManager relation_table_project(RelationTable relation, SqlLiteral *literals) {
+SelectManager relation_table_project(RelationTable relation, char *literal) {
 	SelectManager manager;
 	return manager;
 }

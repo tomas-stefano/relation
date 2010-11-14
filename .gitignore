@@ -1,0 +1,5 @@
+*.o
+sql_relation_test_suite
+*.rbc
+*~
+*.sw?
