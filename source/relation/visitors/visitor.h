@@ -3,6 +3,4 @@
 
 char *visitor_accept(SelectStatement abstract_syntax_tree);
 
-char *visitor_visit(SelectStatement abstract_syntax_tree);
-
 #endif

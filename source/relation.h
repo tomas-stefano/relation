@@ -9,7 +9,7 @@ typedef struct relation_table {
 
 typedef char *SqlLiteral; /* Alias for pointer to char */
 
-typedef struct select_statement {
+typedef struct statement {
 	SqlLiteral *projections;   /* Array of SqlLiterals */
 	RelationTable froms;       /* Table */
 	int limit;                 /* Limit */

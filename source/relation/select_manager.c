@@ -11,16 +11,11 @@ SelectManager new_select_manager(RelationTable table) {
 }
 
 SelectManager select_manager_from(SelectManager select_manager, RelationTable table) {
-	// In Ruby
-	// ctx.froms  = table
-	// self
-	
-	// In C
-	// manager.abstract_syntax_tree.froms = table;
 	return select_manager;
 }
 
 SelectManager select_manager_project(SelectManager select_manager, SqlLiteral sql_literal) {
-	select_manager.abstract_syntax_tree.projections = &sql_literal;
+	select_manager.abstract_syntax_tree.projections = (SqlLiteral *) malloc(sizeof(sql_literal));
+	select_manager.abstract_syntax_tree.projections[0] = sql_literal;
 	return select_manager;
 }

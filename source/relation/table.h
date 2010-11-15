@@ -3,8 +3,6 @@
 
 RelationTable new_relation_table(char *table_name);
 
-char *relation_table_primary_key(RelationTable table);
-
 SelectManager relation_table_from(RelationTable table);
 
 SelectManager relation_table_select_manager(RelationTable table);

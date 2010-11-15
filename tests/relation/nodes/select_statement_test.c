@@ -7,19 +7,16 @@ static void initialize_should_have_limit_member() {
 	assert_equal(select_statement.limit, 1);
 }
 
-static void initialize_should_have_projections_member_as_array_of_strings() {
+static void initialize_should_be_possible_to_assign_a_sql_literal() {
 	SelectStatement select_statement;
 	SqlLiteral sql_literal_name = "name";
-	SqlLiteral sql_literal_email = "email";
 	select_statement.projections = &sql_literal_name;
-	select_statement.projections[1] = sql_literal_email;
-	assert_string_equal(select_statement.projections[0], "name");	
-	assert_string_equal(select_statement.projections[1], "email");
+	assert_string_equal(select_statement.projections[0], "name");
 }
 
 TestSuite *select_statement_suite() {
 	TestSuite *suite = create_test_suite();	
 	add_test(suite, initialize_should_have_limit_member);
-	add_test(suite, initialize_should_have_projections_member_as_array_of_strings);
+	add_test(suite, initialize_should_be_possible_to_assign_a_sql_literal);
 	return suite;
 }
