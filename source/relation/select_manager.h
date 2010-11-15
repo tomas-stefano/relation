@@ -7,5 +7,4 @@ SelectManager select_manager_project(SelectManager select_manager, char *literal
 
 SelectManager select_manager_from(SelectManager select_manager, RelationTable table);
 
-
 #endif

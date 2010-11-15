@@ -4,15 +4,15 @@
 	#define RelationVersion "0.1.0"
 
 typedef struct relation_table {
-	char *name;
+	char *name; /* Table name */
 } RelationTable;
 
-typedef char *SqlLiteral;
+typedef char *SqlLiteral; /* Alias for pointer to char */
 
 typedef struct select_statement {
-	int limit;
-	SqlLiteral *projections;
-	RelationTable froms;
+	SqlLiteral *projections;   /* Array of SqlLiterals */
+	RelationTable froms;       /* Table */
+	int limit;                 /* Limit */
 } SelectStatement;
 	
 typedef struct manager_select {

@@ -9,7 +9,7 @@ SelectManager relation_table_from(RelationTable table);
 
 SelectManager relation_table_select_manager(RelationTable table);
 
-SelectManager relation_table_project(RelationTable table, char *literal);
+SelectManager relation_table_project(RelationTable table, SqlLiteral sql_literal);
 
 SelectManager relation_table_limit(RelationTable table, int limit_number);
 

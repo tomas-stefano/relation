@@ -30,7 +30,8 @@ static void select_manager_should_return_a_empty_select() {
 }
 
 static void project_can_pass_all_the_fields_in_the_table() {
-	SelectManager manager = relation_table_project(users, "*");
+	SqlLiteral literal = "*";
+	SelectManager manager = relation_table_project(users, literal);
 	assert_string_equal(relation_to_sql(manager), "SELECT * from users");
 }
 
