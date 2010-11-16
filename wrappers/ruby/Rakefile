@@ -2,7 +2,11 @@ require 'rubygems'
 require 'rake'
 require 'rake/extensiontask'
 
-Rake::ExtensionTask.new('ruby_relation/relation_table')
+Rake::ExtensionTask.new do |extension|
+  extension.name    = 'relation_table'
+  extension.ext_dir = 'ext/ruby_relation/relation_table'
+  extension.lib_dir = 'lib/relation'
+end
 
 task :test do
   system('rake clean compile')
