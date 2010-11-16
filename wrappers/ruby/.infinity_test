@@ -1,7 +1,12 @@
 #!/usr/bin/env ruby
 infinity_test do
+  
+  before :all do
+    system('rake compile')
+  end
+
   heuristics do
-    add('^lib/(.*)\.bundle') do |file|
+    add("^ext/*/(.*)\.c") do |file|
       run :all => :tests
     end
   end
