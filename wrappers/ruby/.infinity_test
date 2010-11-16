@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
 infinity_test do
   
-  before :all do
-    system('rake compile')
-  end
+  before(:all) { system('rake compile') }
+  after(:all) { system('rake clobber') }
 
   use :test_framework => :rspec, :rubies => %w(1.9.2)
 

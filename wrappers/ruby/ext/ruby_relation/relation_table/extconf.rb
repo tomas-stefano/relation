@@ -28,6 +28,9 @@ dir_config(extension_name)
 RELATION_HEADER_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', '..', '..', 'source'))
 RELATION_HEADER_FLAG = "-I #{RELATION_HEADER_PATH}"
 
+object_files  = Dir["*.o", "#{RELATION_HEADER_PATH}/*.o", "#{RELATION_HEADER_PATH}/*/*.o"]
+$objs = object_files
+
 with_cflags(RELATION_HEADER_FLAG) do
-  create_makefile(extension_name)
+    create_makefile(extension_name)
 end
