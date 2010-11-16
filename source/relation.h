@@ -9,8 +9,13 @@ typedef struct relation_table {
 
 typedef char *SqlLiteral; /* Alias for pointer to char */
 
+typedef struct projections_node {
+   SqlLiteral sql_literal;
+   struct projections_node *next;
+} Projections;
+
 typedef struct statement {
-	SqlLiteral *projections;   /* Array of SqlLiterals */
+	Projections *projections;   /* Nodes(Linked Lists) of SqlLiterals */
 	RelationTable froms;       /* Table */
 	int limit;                 /* Limit */
 } SelectStatement;

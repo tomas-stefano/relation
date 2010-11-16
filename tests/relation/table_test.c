@@ -26,17 +26,21 @@ static void select_manager_should_return_a_empty_select() {
 }
 
 static void project_can_pass_all_the_fields_in_the_table() {
-	SqlLiteral literal = "*";
-	SelectManager manager = relation_table_project(users, literal);
+	SelectManager manager = relation_table_project(users, new_sql_literal("*"));
 	assert_string_equal(relation_to_sql(manager), "SELECT * FROM users");
 }
 
 static void project_should_be_possible_to_have_many_literals() {
-	// RelationTable relation = new_relation_table("photos");
-	// SqlLiteral literal_name = "name";
-	// SqlLiteral literal_uri = "uri";
-	// SelectManager manager = relation_table_project(relation, literal_name);
-	// assert_string_equal(relation_to_sql(manager), "SELECT name, uri from photos");
+	SelectManager manager = relation_table_project(users, new_sql_literal("name"));
+	manager = select_manager_project(manager, new_sql_literal("email"));
+	assert_string_equal(relation_to_sql(manager), "SELECT email,name FROM users");
+}
+
+static void project_should_be_possible_to_have_many_literals_including_count() {
+	SelectManager manager = relation_table_project(users, new_sql_literal("name"));
+	manager = select_manager_project(manager, new_sql_literal("email"));
+	manager = select_manager_project(manager, new_sql_literal("count(*) as all_users"));
+	assert_string_equal(relation_to_sql(manager), "SELECT count(*) as all_users,email,name FROM users");
 }
 
 static void limit_should_add_a_limit_number() {
@@ -68,6 +72,7 @@ TestSuite *relation_table_suite() {
 	/* describe #project */	
 	add_test(suite, project_can_pass_all_the_fields_in_the_table);
 	add_test(suite, project_should_be_possible_to_have_many_literals);
+	add_test(suite, project_should_be_possible_to_have_many_literals_including_count);
 	
 	/* describe #limit */
 	add_test(suite, limit_should_add_a_limit_number);

@@ -1,5 +1,6 @@
 #include <cgreen/cgreen.h>
 #include "relation.h"
+#include "relation/sql_literal.h"
 #include "relation/tree_manager.h"
 #include "relation/select_manager.h"
 #include "relation/table.h"
@@ -17,7 +18,7 @@ static void initialize_should_create_a_select_manager_with_relation_table_in_syn
 
 static void project_should_accept_strings() {
 	SelectManager select_manager = new_select_manager(users);
-	select_manager = select_manager_project(select_manager, "id");
+	select_manager = select_manager_project(select_manager, new_sql_literal("id"));
 	assert_string_equal(relation_to_sql(select_manager), "SELECT id FROM users");
 }
 
