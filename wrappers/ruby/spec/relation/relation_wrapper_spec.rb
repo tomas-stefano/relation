@@ -1,4 +1,5 @@
 require 'spec_helper'
 
-module Relation
+describe Relation do
+  
 end
