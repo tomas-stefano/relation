@@ -11,6 +11,9 @@ SelectManager new_select_manager(RelationTable table) {
 	return select_manager;
 }
 
+/*
+
+*/
 SelectManager select_manager_from(SelectManager select_manager, RelationTable table) {
 	return select_manager;
 }
@@ -51,5 +54,10 @@ SelectManager select_manager_project(SelectManager select_manager, SqlLiteral sq
 		projection->next = select_manager.abstract_syntax_tree.projections;
 		select_manager.abstract_syntax_tree.projections = projection;
 	}
+	return select_manager;
+}
+
+SelectManager select_manager_limit(SelectManager select_manager, int limit_number) {
+	select_manager.abstract_syntax_tree.limit = limit_number;
 	return select_manager;
 }

@@ -44,16 +44,16 @@ static void project_should_be_possible_to_have_many_literals_including_count() {
 }
 
 static void limit_should_add_a_limit_number() {
-	// RelationTable relation = new_relation_table("developers");
-	// SelectManager manager = relation_table_limit(relation, 1);
-	// manager = relation_table_project(relation, "*");
-	// assert_string_equal(relation_to_sql(manager), "SELECT * from developers LIMIT 1");
+	RelationTable developers = new_relation_table("developers");
+	SelectManager manager = relation_table_limit(developers, 1);
+	manager = select_manager_project(manager, new_sql_literal("*"));
+	assert_string_equal(relation_to_sql(manager), "SELECT * FROM developers LIMIT 1");
 }
 
 static void limit_should_pass_a_high_number() {
-	// SelectManager manager = relation_table_limit(users, 1000000);
-	// manager = relation_table_project(users, "*");
-	// assert_string_equal(relation_to_sql(manager), "SELECT * from users LIMIT 1000000");
+	SelectManager manager = relation_table_limit(users, 10000000);
+	manager = select_manager_project(manager, new_sql_literal("*"));
+	assert_string_equal(relation_to_sql(manager), "SELECT * FROM users LIMIT 10000000");
 }
 
 TestSuite *relation_table_suite() {

@@ -17,11 +17,9 @@ SelectManager relation_table_select_manager(RelationTable table) {
 }
 
 SelectManager relation_table_project(RelationTable table, SqlLiteral sql_literal) {
-	SelectManager manager = new_select_manager(table);
-	manager = select_manager_project(manager, sql_literal);
-	return manager;
+	return select_manager_project(relation_table_from(table), sql_literal);
 }
 
 SelectManager relation_table_limit(RelationTable table, int limit_number) {
-	return relation_table_from(table);
+	return select_manager_limit(relation_table_from(table), limit_number);
 }
