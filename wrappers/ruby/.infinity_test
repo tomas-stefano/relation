@@ -5,6 +5,8 @@ infinity_test do
     system('rake compile')
   end
 
+  use :test_framework => :rspec, :rubies => %w(1.9.2)
+
   heuristics do
     add("^ext/*/(.*)\.c") do |file|
       run :all => :tests
