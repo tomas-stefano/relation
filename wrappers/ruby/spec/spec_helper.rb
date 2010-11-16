@@ -1,4 +1,4 @@
-require 'relation_wrapper'
+require 'relation'
 require 'rspec'
 
 RSpec.configure do |config|

@@ -21,6 +21,6 @@
 #  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'mkmf'
-extension_name = 'relation_wrapper'
+extension_name = 'relation_table'
 dir_config(extension_name)
 create_makefile(extension_name)

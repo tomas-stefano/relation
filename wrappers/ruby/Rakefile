@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'rake'
-
 require 'rake/extensiontask'
-Rake::ExtensionTask.new('relation_wrapper')
+
+Rake::ExtensionTask.new('ruby_relation/relation_table')
 
 task :test do
   system('rake clean compile')
