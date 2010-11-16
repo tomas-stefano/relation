@@ -25,7 +25,7 @@ char *visit_select_statements(SelectStatement ast) {
 		int index;
 		for(index = 0; ast.projections != NULL; index++) {
 			if(index > 0) strcat(query, ",");
-			query = (char *) realloc(query, sizeof(query) + ast.projections->sql_literal);
+			query = (char *) realloc(query, sizeof(query) + 10);
 			strcat(query, ast.projections->sql_literal);
 			ast.projections = ast.projections->next;
 		}
@@ -41,8 +41,6 @@ char *visit_select_statements(SelectStatement ast) {
 		integer_to_char(ast.limit, limit, 10); // base 10
 		query = (char *) realloc(query, sizeof(query) + strlen(limit));
 		strcat(query, " LIMIT ");
-		// query = realloc(query, sizeof(query) + 7);
-		// strcat(query, " LIMIT ");
 		strcat(query, limit);
 	}
 	

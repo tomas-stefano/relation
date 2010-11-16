@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 
 require 'rake/extensiontask'
-Rake::ExtensionTask.new('little_beeper')
+Rake::ExtensionTask.new('relation_wrapper')
 
 task :test do
   system('rake clean compile')
