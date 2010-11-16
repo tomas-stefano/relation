@@ -1,0 +1,10 @@
+require 'rubygems'
+require 'rake'
+
+require 'rake/extensiontask'
+Rake::ExtensionTask.new('little_beeper')
+
+task :test do
+  system('rake clean compile')
+  system('rspec spec')
+end

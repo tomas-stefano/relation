@@ -51,9 +51,9 @@ static void limit_should_add_a_limit_number() {
 }
 
 static void limit_should_pass_a_high_number() {
-	SelectManager manager = relation_table_limit(users, 10000000);
+	SelectManager manager = relation_table_limit(users, 100000000);
 	manager = select_manager_project(manager, new_sql_literal("*"));
-	assert_string_equal(relation_to_sql(manager), "SELECT * FROM users LIMIT 10000000");
+	assert_string_equal(relation_to_sql(manager), "SELECT * FROM users LIMIT 100000000");
 }
 
 TestSuite *relation_table_suite() {
