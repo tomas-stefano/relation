@@ -21,6 +21,13 @@
 #  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'mkmf'
+
 extension_name = 'relation_table'
 dir_config(extension_name)
-create_makefile(extension_name)
+
+RELATION_HEADER_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', '..', '..', 'source'))
+RELATION_HEADER_FLAG = "-I #{RELATION_HEADER_PATH}"
+
+with_cflags(RELATION_HEADER_FLAG) do
+  create_makefile(extension_name)
+end
