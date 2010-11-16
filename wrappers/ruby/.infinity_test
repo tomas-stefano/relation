@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+infinity_test do
+  heuristics do
+    add('^lib/(.*)\.bundle') do |file|
+      run :all => :tests
+    end
+  end
+end
