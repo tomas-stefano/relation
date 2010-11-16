@@ -8,7 +8,9 @@ Rake::ExtensionTask.new do |extension|
   extension.lib_dir = 'lib/relation'
 end
 
-task :test do
-  system('rake clean compile')
-  system('rspec spec')
+task :clean_and_clobber_without_verbose do
+  verbose(false)
+  Rake::Task["clean"].invoke
+  Rake::Task["clobber"].invoke
+  puts "\nClean and Clobber ok \n"
 end

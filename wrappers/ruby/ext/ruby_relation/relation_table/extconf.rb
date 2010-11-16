@@ -19,6 +19,7 @@
 #  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 #  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 #  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
 
 require 'mkmf'
 
@@ -28,9 +29,10 @@ dir_config(extension_name)
 RELATION_HEADER_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', '..', '..', 'source'))
 RELATION_HEADER_FLAG = "-I #{RELATION_HEADER_PATH}"
 
-object_files  = Dir["*.o", "#{RELATION_HEADER_PATH}/*.o", "#{RELATION_HEADER_PATH}/*/*.o"]
-$objs = object_files
+OBJECTS_TO_LINK = Dir["*.o", "#{RELATION_HEADER_PATH}/*.o", "#{RELATION_HEADER_PATH}/*/*.o"].join(' ')
 
 with_cflags(RELATION_HEADER_FLAG) do
+  with_ldflags(OBJECTS_TO_LINK) do
     create_makefile(extension_name)
+  end
 end

@@ -2,7 +2,8 @@
 infinity_test do
   
   before(:all) { system('rake compile') }
-  after(:all) { system('rake clobber') }
+
+  after(:all) { system("rake clean_and_clobber_without_verbose") }
 
   use :test_framework => :rspec, :rubies => %w(1.9.2)
 

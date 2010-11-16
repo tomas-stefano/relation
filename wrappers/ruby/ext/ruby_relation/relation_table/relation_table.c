@@ -13,6 +13,7 @@ static VALUE allocate_relation_table(VALUE klass) {
 	RelationTable table;
 	VALUE object;
 	table = new_relation_table("users");
+	// object = Data_Wrap_Struct(klass, 0, relation_table_free, table);
 	return object;
 }
 
