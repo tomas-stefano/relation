@@ -1,4 +1,4 @@
-#include <ruby.h>
+#include "relation_select_manager.h"
 
 VALUE relation_select_manager_select(VALUE self, VALUE literal) {
 	return self;
