@@ -3,18 +3,22 @@
 #include "relation.h"
 #include "relation/select_manager.h"
 
-SelectManager new_select_manager(RelationTable *table) {
-	SelectManager select_manager;
-	select_manager.abstract_syntax_tree.froms = table;
-	select_manager.abstract_syntax_tree.limit = 0;
-	select_manager.abstract_syntax_tree.projections = NULL;
+SelectManager *new_select_manager() {
+	SelectManager *select_manager = (SelectManager *) malloc(sizeof(SelectManager));
+	return select_manager;
+}
+
+SelectManager *select_manager_instance_table(SelectManager *select_manager, RelationTable *table) {
+	select_manager->abstract_syntax_tree.froms = table;
+	select_manager->abstract_syntax_tree.limit = 0;
+	select_manager->abstract_syntax_tree.projections = NULL;
 	return select_manager;
 }
 
 /*
 
 */
-SelectManager select_manager_from(SelectManager select_manager, RelationTable *table) {
+SelectManager *select_manager_from(SelectManager *select_manager, RelationTable *table) {
 	return select_manager;
 }
 
@@ -42,22 +46,22 @@ SelectManager select_manager_from(SelectManager select_manager, RelationTable *t
 	select_manager_project.abstract_syntax_tree.projections -> ["email", next ~> ["name", next ~> NULL]]
 
 */
-SelectManager select_manager_project(SelectManager select_manager, SqlLiteral sql_literal) {
+SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral sql_literal) {
 	Projections *projection;
 	projection = (Projections *) malloc(sizeof(Projections) + 1); // +1 because the '\0' (I think =\ )
 	projection->sql_literal = sql_literal;
 	projection->next = NULL;
-	if(select_manager.abstract_syntax_tree.projections == NULL) {
-		select_manager.abstract_syntax_tree.projections = projection;
+	if(select_manager->abstract_syntax_tree.projections == NULL) {
+		select_manager->abstract_syntax_tree.projections = projection;
 	}
 	else {
-		projection->next = select_manager.abstract_syntax_tree.projections;
-		select_manager.abstract_syntax_tree.projections = projection;
+		projection->next = select_manager->abstract_syntax_tree.projections;
+		select_manager->abstract_syntax_tree.projections = projection;
 	}
 	return select_manager;
 }
 
-SelectManager select_manager_limit(SelectManager select_manager, int limit_number) {
-	select_manager.abstract_syntax_tree.limit = limit_number;
+SelectManager *select_manager_limit(SelectManager *select_manager, int limit_number) {
+	select_manager->abstract_syntax_tree.limit = limit_number;
 	return select_manager;
 }

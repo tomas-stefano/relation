@@ -14,18 +14,19 @@ RelationTable *table_instance_name(RelationTable *relation_table, char *table_na
 	return relation_table;
 }
 
-SelectManager relation_table_from(RelationTable *table) {
-	return new_select_manager(table);
+SelectManager *relation_table_from(RelationTable *table) {
+	SelectManager *select_manager = new_select_manager();
+	return select_manager_instance_table(select_manager, table);
 }
 
-SelectManager relation_table_select_manager(RelationTable *table) {
+SelectManager *relation_table_select_manager(RelationTable *table) {
 	return relation_table_from(table);
 }
 
-SelectManager relation_table_project(RelationTable *table, SqlLiteral sql_literal) {
+SelectManager *relation_table_project(RelationTable *table, SqlLiteral sql_literal) {
 	return select_manager_project(relation_table_from(table), sql_literal);
 }
 
-SelectManager relation_table_limit(RelationTable *table, int limit_number) {
+SelectManager *relation_table_limit(RelationTable *table, int limit_number) {
 	return select_manager_limit(relation_table_from(table), limit_number);
 }

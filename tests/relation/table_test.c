@@ -32,37 +32,37 @@ static void should_set_and_get_the_table_name() {
 }
 
 static void select_manager_should_return_a_empty_select() {
-	SelectManager manager = relation_table_select_manager(users);
+	SelectManager *manager = relation_table_select_manager(users);
 	assert_string_equal(relation_to_sql(manager), "SELECT FROM users");
 }
 
 static void project_can_pass_all_the_fields_in_the_table() {
-	SelectManager manager = relation_table_project(users, new_sql_literal("*"));
+	SelectManager *manager = relation_table_project(users, new_sql_literal("*"));
 	assert_string_equal(relation_to_sql(manager), "SELECT * FROM users");
 }
 
 static void project_should_be_possible_to_have_many_literals() {
-	SelectManager manager = relation_table_project(users, new_sql_literal("name"));
-	manager = select_manager_project(manager, new_sql_literal("email"));
+	SelectManager *manager = relation_table_project(users, new_sql_literal("name"));
+	select_manager_project(manager, new_sql_literal("email"));
 	assert_string_equal(relation_to_sql(manager), "SELECT email,name FROM users");
 }
 
 static void project_should_be_possible_to_have_many_literals_including_count() {
-	SelectManager manager = relation_table_project(users, new_sql_literal("name"));
-	manager = select_manager_project(manager, new_sql_literal("email"));
-	manager = select_manager_project(manager, new_sql_literal("count(*) as all_users"));
+	SelectManager *manager = relation_table_project(users, new_sql_literal("name"));
+	select_manager_project(manager, new_sql_literal("email"));
+	select_manager_project(manager, new_sql_literal("count(*) as all_users"));
 	assert_string_equal(relation_to_sql(manager), "SELECT count(*) as all_users,email,name FROM users");
 }
 
 static void limit_should_add_a_limit_number() {
-	SelectManager manager = relation_table_limit(developers, 1);
-	manager = select_manager_project(manager, new_sql_literal("*"));
+	SelectManager *manager = relation_table_limit(developers, 1);
+	select_manager_project(manager, new_sql_literal("*"));
 	assert_string_equal(relation_to_sql(manager), "SELECT * FROM developers LIMIT 1");
 }
 
 static void limit_should_pass_a_high_number() {
-	SelectManager manager = relation_table_limit(users, 100000000);
-	manager = select_manager_project(manager, new_sql_literal("*"));
+	SelectManager *manager = relation_table_limit(users, 100000000);
+	select_manager_project(manager, new_sql_literal("*"));
 	assert_string_equal(relation_to_sql(manager), "SELECT * FROM users LIMIT 100000000");
 }
 

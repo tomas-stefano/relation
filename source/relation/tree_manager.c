@@ -7,6 +7,6 @@
 *  I don't know how to implement the Visitors Pattern in C 
 *
 */
-char *relation_to_sql(SelectManager manager) {
-	return visitor_accept(manager.abstract_syntax_tree);
+char *relation_to_sql(SelectManager *manager) {
+	return visitor_accept(manager->abstract_syntax_tree);
 }
