@@ -11,7 +11,18 @@ static VALUE allocate_select_manager(VALUE klass) {
 	return object;
 }
 
-VALUE relation_select_manager_select(VALUE self, VALUE literal) {
+VALUE relation_select_manager_initialize(VALUE self, VALUE table) {
+	return self;
+}
+
+VALUE relation_select_manager_select(VALUE self, VALUE projections) {
+	// SelectManager *select_manager;
+	// Data_Get_Struct(self, SelectManager, select_manager);
+	// long i;
+	// 
+	// for(i = 0; i < RARRAY_LEN(projections); i++) {
+	// 	RARRAY_PTR(projections)[i]
+	// }
 	return self;
 }
 
@@ -22,5 +33,6 @@ void Init_relation_select_manager() {
 	rb_define_alloc_func(class_SelectManager, allocate_select_manager);
 	
 	/* Instance methods*/
-	rb_define_method(class_SelectManager, "select", relation_select_manager_select, 1);
+	rb_define_method(class_SelectManager, "initialize", relation_select_manager_initialize, 1);
+	rb_define_method(class_SelectManager, "select", relation_select_manager_select, -2);
 }

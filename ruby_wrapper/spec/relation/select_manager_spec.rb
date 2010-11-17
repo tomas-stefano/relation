@@ -16,6 +16,11 @@ module Relation
         manager.select('name').select('email')
         manager.to_sql.should == "SELECT email,name FROM users"
       end
+      
+      it "should pass an array of selects" do
+        manager.select('name', 'email', 'age')
+        manager.to_sql.should == "SELECT age,email,name FROM users"
+      end
     end
   
     describe '.superclass' do
