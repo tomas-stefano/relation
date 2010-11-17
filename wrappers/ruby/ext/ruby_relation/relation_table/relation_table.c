@@ -9,26 +9,27 @@
 
 #include "relation_table.h"
 
+static void relation_table_free(void *pointer) {
+	free(pointer);
+}
+
 static VALUE allocate_relation_table(VALUE klass) {
-	RelationTable *table;
+	RelationTable *table = new_relation_table();
 	VALUE object;
-	object = Data_Wrap_Struct(klass, 0, 0, table);
+	object = Data_Wrap_Struct(klass, 0, relation_table_free, table);
 	return object;
 }
 
 VALUE relation_table_initialize(VALUE self, VALUE name) {
 	RelationTable *table;
 	Data_Get_Struct(self, RelationTable, table);
-	char *table_name;
-	table_name = (const char *)StringValuePtr(name);
-	*table = new_relation_table(table_name);
+	table_instance_name(table, StringValuePtr(name));
 	return self;
 }
 
 VALUE relation_table_name(VALUE self) {
 	RelationTable *table;
 	Data_Get_Struct(self, RelationTable, table);
-	if(table->name == NULL) return Qnil;
 	return rb_str_new2(table->name);
 }
 
