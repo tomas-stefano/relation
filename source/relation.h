@@ -16,7 +16,7 @@ typedef struct projections_node {
 
 typedef struct statement {
 	Projections *projections;   /* Nodes(Linked Lists) of SqlLiterals */
-	RelationTable froms;       /* Table */
+	RelationTable *froms;       /* Table */
 	int limit;                 /* Limit */
 } SelectStatement;
 	

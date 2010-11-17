@@ -19,13 +19,16 @@ static VALUE allocate_relation_table(VALUE klass) {
 VALUE relation_table_initialize(VALUE self, VALUE name) {
 	RelationTable *table;
 	Data_Get_Struct(self, RelationTable, table);
-	*table = new_relation_table(StringValuePtr(name));
+	char *table_name;
+	table_name = (const char *)StringValuePtr(name);
+	*table = new_relation_table(table_name);
 	return self;
 }
 
 VALUE relation_table_name(VALUE self) {
 	RelationTable *table;
 	Data_Get_Struct(self, RelationTable, table);
+	if(table->name == NULL) return Qnil;
 	return rb_str_new2(table->name);
 }
 

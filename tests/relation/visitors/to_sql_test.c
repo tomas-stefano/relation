@@ -3,9 +3,11 @@
 #include "relation/table.h"
 #include "relation/visitors/to_sql.h"
 
+RelationTable *jokers;
 static void should_return_the_name_of_the_table() {
-	RelationTable users = new_relation_table("users");
-	assert_string_equal(visit_relation_table(users), "users");
+	jokers = new_relation_table();
+	table_instance_name(jokers, "jokers");
+	assert_string_equal(visit_relation_table(jokers), "jokers");
 }
 
 TestSuite *visitor_to_sql_suite() {

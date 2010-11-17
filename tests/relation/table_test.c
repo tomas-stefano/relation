@@ -6,18 +6,29 @@
 #include "relation/select_manager.h"
 #include "relation/tree_manager.h"
 
-RelationTable users;
+RelationTable *users;
+RelationTable *posts;
+RelationTable *developers;
+
 static void before_all() {
-	users = new_relation_table("users");
+	users = new_relation_table();
+	table_instance_name(users, "users");
+	posts = new_relation_table();
+	table_instance_name(posts, "posts");
+	developers = new_relation_table();
+	table_instance_name(developers, "developers");
 }
 
 static void should_have_the_name_of_the_table() {
-	RelationTable relation = new_relation_table("posts");
-	assert_string_equal(relation.name, "posts");
+	assert_string_equal(posts->name, "posts");
 }
 
 static void should_set_the_name_of_the_sql_table() {
-	assert_string_equal(users.name, "users");
+	assert_string_equal(users->name, "users");
+}
+
+static void should_set_and_get_the_table_name() {
+	assert_string_equal(developers->name, "developers");
 }
 
 static void select_manager_should_return_a_empty_select() {
@@ -44,7 +55,6 @@ static void project_should_be_possible_to_have_many_literals_including_count() {
 }
 
 static void limit_should_add_a_limit_number() {
-	RelationTable developers = new_relation_table("developers");
 	SelectManager manager = relation_table_limit(developers, 1);
 	manager = select_manager_project(manager, new_sql_literal("*"));
 	assert_string_equal(relation_to_sql(manager), "SELECT * FROM developers LIMIT 1");
@@ -65,6 +75,7 @@ TestSuite *relation_table_suite() {
 	/* describe #name */
 	add_test(suite, should_have_the_name_of_the_table);
 	add_test(suite, should_set_the_name_of_the_sql_table);
+	add_test(suite, should_set_and_get_the_table_name);
 	
 	/* describe #select_manager */
 	add_test(suite, select_manager_should_return_a_empty_select);

@@ -3,7 +3,7 @@
 #include "relation.h"
 #include "relation/select_manager.h"
 
-SelectManager new_select_manager(RelationTable table) {
+SelectManager new_select_manager(RelationTable *table) {
 	SelectManager select_manager;
 	select_manager.abstract_syntax_tree.froms = table;
 	select_manager.abstract_syntax_tree.limit = 0;
@@ -14,7 +14,7 @@ SelectManager new_select_manager(RelationTable table) {
 /*
 
 */
-SelectManager select_manager_from(SelectManager select_manager, RelationTable table) {
+SelectManager select_manager_from(SelectManager select_manager, RelationTable *table) {
 	return select_manager;
 }
 

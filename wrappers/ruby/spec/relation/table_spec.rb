@@ -12,6 +12,10 @@ module Relation
       it "should return the table name" do
         developers.name.should == "developers"
       end
+      it "should return the table name of a long table" do
+        table = Table.new("the_new_developers_table_that_has_a_lot_of_records_that_they_hate_internet_explorer")
+        table.name.should == "the_new_developers_table_that_has_a_lot_of_records_that_they_hate_internet_explorer"
+      end
     end
     
     describe '#select' do

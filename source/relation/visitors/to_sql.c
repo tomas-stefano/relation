@@ -8,8 +8,8 @@
 #include "relation/tree_manager.h"
 #include "relation/visitors/to_sql.h"
 
-char *visit_relation_table(RelationTable table) {
-	return table.name;
+char *visit_relation_table(RelationTable *table) {
+	return table->name;
 }
 
 /*
