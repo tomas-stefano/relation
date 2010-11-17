@@ -21,6 +21,6 @@
 #  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-['relations', 'nodes', 'visitors'].each do |file|
+['relations', 'visitors'].each do |file|
   require "relation/#{file}"
 end
