@@ -25,6 +25,6 @@ require File.join(File.dirname(__FILE__), '..', 'extconf_helper')
 
 require 'mkmf'
 
-extension_name = 'relation_table'
+extension_name = 'relation_select_manager'
 dir_config(extension_name)
 Makefile.new(extension_name)

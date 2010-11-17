@@ -8,6 +8,18 @@ Rake::ExtensionTask.new do |extension|
   extension.lib_dir = 'lib/relation'
 end
 
+Rake::ExtensionTask.new do |extension|
+  extension.name    = 'relation_tree_manager'
+  extension.ext_dir = 'ext/ruby_relation/relation_tree_manager'
+  extension.lib_dir = 'lib/relation'
+end
+
+Rake::ExtensionTask.new do |extension|
+  extension.name    = 'relation_select_manager'
+  extension.ext_dir = 'ext/ruby_relation/relation_select_manager'
+  extension.lib_dir = 'lib/relation'
+end
+
 task :clean_and_clobber_without_verbose do
   verbose(false)
   Rake::Task["clean"].invoke
