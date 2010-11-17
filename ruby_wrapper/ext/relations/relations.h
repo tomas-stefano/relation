@@ -8,6 +8,7 @@
 * Relation C Library 
 */
 #include "relation.h"
+#include "relation/select_manager.h"
 #include "relation/table.h"
 
 extern VALUE module_Relation;

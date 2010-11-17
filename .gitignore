@@ -6,3 +6,4 @@ sql_relation_test_suite
 tmp
 *.so
 .bundle
+*.bundle
