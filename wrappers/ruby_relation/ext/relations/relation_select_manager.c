@@ -5,9 +5,8 @@ VALUE relation_select_manager_select(VALUE self, VALUE literal) {
 }
 
 void Init_relation_select_manager() {
-	VALUE relation_module = rb_define_module("Relation");
-	VALUE select_manager_class = rb_define_class_under(relation_module, "SelectManager", rb_cObject);
-	
+	class_SelectManager = rb_define_class_under(module_Relation, "SelectManager", class_TreeManager);
+
 	/* Instance methods*/
-	rb_define_method(select_manager_class, "select", relation_select_manager_select, 1);
+	rb_define_method(class_SelectManager, "select", relation_select_manager_select, 1);
 }
