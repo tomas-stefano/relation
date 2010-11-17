@@ -1,6 +1,8 @@
 #ifndef TABLE_H
 #define TABLE_H
 
+// RelationTable *allocate_relation_table();
+
 RelationTable new_relation_table(char *table_name);
 
 SelectManager relation_table_from(RelationTable table);

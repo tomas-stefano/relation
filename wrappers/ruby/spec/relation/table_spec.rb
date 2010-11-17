@@ -2,9 +2,20 @@ require 'spec_helper'
 
 module Relation
   describe Table do
-    let(:users) { Table.new(:users) }
+    let(:users) { Table.new('users') }
+    let(:developers) { Table.new('developers') }
+    
+    describe '#name' do
+      it "should return the name of the table" do
+        users.name.should == "users"
+      end
+      it "should return the table name" do
+        developers.name.should == "developers"
+      end
+    end
     
     describe '#select' do
+      
       it "should be possible to pass String" do
         users.select("*").to_sql.should == "SELECT * FROM users"
       end
