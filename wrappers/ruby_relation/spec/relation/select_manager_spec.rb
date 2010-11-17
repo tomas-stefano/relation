@@ -5,11 +5,16 @@ module Relation
     let(:people) { Relation::Table.new('people') }
     
     describe '#select' do
+      let(:manager) { SelectManager.new(people) }
+      
       it "should pass a string" do
-        pending
-        manager = SelectManager.new(people)
         manager.select("name")
         manager.to_sql.should == "SELECT name FROM users"
+      end
+      
+      it "should pass many selects" do
+        manager.select('name').select('email')
+        manager.to_sql.should == "SELECT email,name FROM users"
       end
     end
   

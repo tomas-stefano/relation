@@ -5,4 +5,4 @@ sql_relation_test_suite
 *.sw?
 tmp
 *.so
-*.bundle
+.bundle
