@@ -22,9 +22,8 @@
 #
 
 require File.join(File.dirname(__FILE__), '..', 'extconf_helper')
-
 require 'mkmf'
 
-extension_name = 'relation_tree_manager'
+extension_name = 'nodes'
 dir_config(extension_name)
 Makefile.new(extension_name)

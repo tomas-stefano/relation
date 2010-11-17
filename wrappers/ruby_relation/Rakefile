@@ -1,0 +1,46 @@
+# -*- ruby -*-
+
+require 'rubygems'
+require 'rake'
+require 'rake/extensiontask'
+
+Rake::ExtensionTask.new do |extension|
+  extension.name = 'relations'
+  extension.ext_dir = 'ext/relations'
+  extension.lib_dir = 'lib/relation'
+end
+
+Rake::ExtensionTask.new do |extension|
+  extension.name = 'nodes'
+  extension.ext_dir = 'ext/nodes'
+  extension.lib_dir = 'lib/relation/'
+end
+
+Rake::ExtensionTask.new do |extension|
+  extension.name = 'visitors'
+  extension.ext_dir = 'ext/visitors'
+  extension.lib_dir = 'lib/relation/'
+end
+
+desc 'Clean and Clobber without verbose'
+task :clean_and_clobber_without_verbose do
+  verbose(false)
+  Rake::Task["clean"].invoke
+  Rake::Task["clobber"].invoke
+  puts "\nClean and Clobber ok \n"
+end
+
+desc 'Compile and Run tests'
+task :test do
+  begin
+    Rake::Task['compile'].invoke
+    puts
+    puts
+    puts 'Running Tests'
+    puts
+    puts
+    system("rspec spec")
+  ensure
+    Rake::Task["clean_and_clobber_without_verbose"].invoke
+  end
+end

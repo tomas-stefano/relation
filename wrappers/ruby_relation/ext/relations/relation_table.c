@@ -1,12 +1,4 @@
-
-#include <ruby.h>
-#include <stdlib.h>
-
-/* 
-* Relation C Library 
-*/
-#include "relation.h"
-#include "relation/table.h"
+#include "relation_table.h"
 
 static void relation_table_free(void *pointer) {
 	free(pointer);
