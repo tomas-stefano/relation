@@ -24,20 +24,26 @@ VALUE relation_table_get_name(VALUE self) {
 	return rb_str_new2(table->name);
 }
 
-VALUE relation_table_limit_wrapper(VALUE self) {
-	RelationTable *table;
-	Data_Get_Struct(self, RelationTable, table);
-	return self;
+VALUE relation_table_limit_wrapper(VALUE self, VALUE limit) {
+	VALUE select_manager;
+	VALUE argv[1];
+	argv[0] = self;
+	select_manager = rb_class_new_instance(1, argv, class_SelectManager);
+	rb_funcall(select_manager, rb_intern("limit"), 1, limit);
+	return select_manager;
 }
 
-VALUE relation_table_select_wrapper(VALUE self) {
-	RelationTable *table;
-	Data_Get_Struct(self, RelationTable, table);
-	return self;
+VALUE relation_table_select_wrapper(VALUE self, VALUE projections) {
+	VALUE select_manager;
+	VALUE argv[1];
+	argv[0] = self;
+	select_manager = rb_class_new_instance(1, argv, class_SelectManager);
+	rb_funcall(select_manager, rb_intern("select"), 1, projections);
+	return select_manager;
 }
 
 void Init_relation_table() {
-	VALUE class_Table = rb_define_class_under(module_Relation, "Table", rb_cObject);
+	class_Table = rb_define_class_under(module_Relation, "Table", rb_cObject);
 
 	/* Allocate funtion to handle with C structs */
 	rb_define_alloc_func(class_Table, allocate_relation_table);

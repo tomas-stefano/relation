@@ -3,6 +3,7 @@
 VALUE module_Relation;
 VALUE class_TreeManager;
 VALUE class_SelectManager;
+VALUE class_Table;
 
 void Init_relations() {
 	module_Relation = rb_define_module("Relation");

@@ -44,3 +44,5 @@ task :test do
     Rake::Task["clean_and_clobber_without_verbose"].invoke
   end
 end
+
+task :default => :test

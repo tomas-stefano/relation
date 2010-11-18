@@ -10,8 +10,12 @@
 #include "relation.h"
 #include "relation/select_manager.h"
 #include "relation/table.h"
+#include "relation/tree_manager.h"
+#include "relation/visitors/to_sql.h"
+#include "relation/visitors/visitor.h"
 
 extern VALUE module_Relation;
+extern VALUE class_Table;
 extern VALUE class_TreeManager;
 extern VALUE class_SelectManager;
 	
