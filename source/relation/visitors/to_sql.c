@@ -14,6 +14,25 @@ char *visit_relation_table(RelationTable *table) {
 
 /*
 *
+*/
+char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
+	if(ast.projections != NULL) {
+		for(; ast.projections != NULL; ast.projections = ast.projections->next) {
+			query = realloc(query, strlen(query) + strlen(ast.projections->sql_literal) + 1);
+			strcat(query, ast.projections->sql_literal);
+			if(ast.projections->next != NULL) {
+				query = realloc(query, strlen(query) + 1);
+				strcat(query, ",");
+			}
+		}
+		query = realloc(query, strlen(query) + 1);
+		strcat(query, " ");
+	}
+	return query;
+}
+
+/*
+*
 *
 * 
 */
@@ -32,18 +51,9 @@ char *visit_select_statements(SelectStatement ast) {
 	query = (char *) malloc(sizeof(SELECT_SIZE) + 1);
 	memcpy(query, SELECT, SELECT_SIZE);
 	query[7] = NULL;
-	if(ast.projections != NULL) {
-		for(; ast.projections != NULL; ast.projections = ast.projections->next) {
-			query = realloc(query, strlen(query) + strlen(ast.projections->sql_literal) + 1);
-			strcat(query, ast.projections->sql_literal);
-			if(ast.projections->next != NULL) {
-				query = realloc(query, strlen(query) + 1);
-				strcat(query, ",");
-			}
-		}
-		query = realloc(query, strlen(query) + 1);
-		strcat(query, " ");
-	}
+	
+	query = visit_syntax_tree_projections(ast, query);
+	
 	query = realloc(query, strlen(query) + FROM_SIZE);
 	strcat(query, FROM);
 	

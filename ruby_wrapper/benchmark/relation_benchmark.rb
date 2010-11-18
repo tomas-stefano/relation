@@ -16,7 +16,7 @@ def run(number)
   end
 end
 
-# Little benchmarking (I'll begin to start more seriously benchs when the wraper is growing )
+# Little benchmarking (I'll begin to start more seriously benchs when the wrapper is growing )
 Benchmark.benchmark do |x|
   x.report("10.000 Queries   ") do
     run(10_000) { simple_query! }
