@@ -27,6 +27,16 @@ module Relation
         users.select("name").select("email").to_sql.should == "SELECT email,name FROM users"
       end
       
+      it "should be possible to pass a SqlLiteral" do
+        pending
+        users.select(SqlLiteral.new('name')).to_sql.should == "SELECT name FROM users"
+      end
+      
+      it "should be possible to pass many Sql Literals" do
+        pending
+        users.select(SqlLiteral.new('password'), SqlLiteral.new('password_confirmation')).to_sql.should == "SELECT password_confirmation,password FROM users"
+      end
+      
     end
     
     describe '#limit' do
@@ -36,6 +46,19 @@ module Relation
       it "should add a high limit number" do
         pending
         users.limit(10_000_000_000).to_sql.should == "SELECT FROM users LIMIT 10000000000"
+      end
+    end
+    
+    describe '#where' do
+      
+    end
+    
+    describe 'putting_all_together' do
+      it "should pass limit before select" do
+        users.limit(10).select('name').to_sql.should == "SELECT name FROM users LIMIT 10"
+      end
+      it "should pass select before limit" do
+        users.select('email').limit(9999999).to_sql.should == "SELECT email FROM users LIMIT 9999999"
       end
     end
     

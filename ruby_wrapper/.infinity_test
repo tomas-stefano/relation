@@ -11,5 +11,8 @@ infinity_test do
     add("^ext/*/(.*)\.c") do |file|
       run :all => :tests
     end
+    add("^ext/*/(.*)\.h") do |file|
+      run :all => :tests
+    end
   end
 end

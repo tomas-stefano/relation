@@ -1,5 +1,8 @@
 #include "relation_table.h"
 
+static ID id_limit;
+static ID id_select;
+
 static void relation_table_free(void *pointer) {
 }
 
@@ -30,15 +33,11 @@ VALUE relation_table_from_wrapper(VALUE self) {
 }
 
 VALUE relation_table_limit_wrapper(VALUE self, VALUE limit) {
-	VALUE select_manager = relation_table_from_wrapper(self);
-	rb_funcall(select_manager, rb_intern("limit"), 1, limit);
-	return select_manager;
+	return rb_funcall(relation_table_from_wrapper(self), id_limit, 1, limit);
 }
 
 VALUE relation_table_select_wrapper(VALUE self, VALUE projections) {
-	VALUE select_manager = relation_table_from_wrapper(self);
-	rb_funcall(select_manager, rb_intern("select"), 1, projections);
-	return select_manager;
+	return rb_funcall(relation_table_from_wrapper(self), id_select, 1, projections);
 }
 
 void Init_relation_table() {
@@ -52,4 +51,7 @@ void Init_relation_table() {
 	rb_define_method(class_Table, "name", relation_table_get_name, 0);
 	rb_define_method(class_Table, "select", relation_table_select_wrapper, 1);
 	rb_define_method(class_Table, "limit", relation_table_limit_wrapper, 1);
+	
+	id_select = rb_intern("select");
+	id_limit = rb_intern("limit");
 }

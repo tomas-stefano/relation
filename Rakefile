@@ -31,7 +31,7 @@ module Color
   end  
 end
 
-module RelationTasks 
+module RelationTasks
 
   def compile(files, options={})
     return if files.empty?
