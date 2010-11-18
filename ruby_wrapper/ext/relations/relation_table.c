@@ -1,7 +1,6 @@
 #include "relation_table.h"
 
 static void relation_table_free(void *pointer) {
-	free(pointer);
 }
 
 static VALUE allocate_relation_table(VALUE klass) {

@@ -11,4 +11,9 @@ void reverse_string(char* begin, char* end);
 
 void integer_to_char(int value, char* str, int base);
 
+#define SELECT "SELECT "
+#define SELECT_SIZE 7
+#define FROM "FROM "
+#define FROM_SIZE 5
+
 #endif

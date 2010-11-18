@@ -17,29 +17,44 @@ char *visit_relation_table(RelationTable *table) {
 *
 * 
 */
+
+// 
+// #define BUFFER sizeof(char) * 256
+// query = (char *) malloc(BUFFER);
+// 
+// 
+// strcat_tomas(query, ...)
+// int strcat_tomas(s , s )
+// verifique_o_buffer(query, BUFFER);
+
 char *visit_select_statements(SelectStatement ast) {
 	char *query;
-	query = (char *) malloc(sizeof(9)); /* Allocate space to store SELECT string */
-	memcpy(query, "SELECT ", 8);
+	query = (char *) malloc(sizeof(SELECT_SIZE) + 1);
+	memcpy(query, SELECT, SELECT_SIZE);
+	query[7] = NULL;
 	if(ast.projections != NULL) {
-		int index;
-		for(index = 0; ast.projections != NULL; index++) {
-			if(index > 0) strcat(query, ",");
-			query = (char *) realloc(query, sizeof(query) + 10);
+		for(; ast.projections != NULL; ast.projections = ast.projections->next) {
+			query = realloc(query, strlen(query) + strlen(ast.projections->sql_literal) + 1);
 			strcat(query, ast.projections->sql_literal);
-			ast.projections = ast.projections->next;
+			if(ast.projections->next != NULL) {
+				query = realloc(query, strlen(query) + 1);
+				strcat(query, ",");
+			}
 		}
-		query = (char *) realloc(query, sizeof(query) + 1);
+		query = realloc(query, strlen(query) + 1);
 		strcat(query, " ");
 	}
-	strcat(query, "FROM ");
+	query = realloc(query, strlen(query) + FROM_SIZE);
+	strcat(query, FROM);
+	
+	query = realloc(query, strlen(query) + strlen(visit_relation_table(ast.froms)));
 	strcat(query, visit_relation_table(ast.froms));
 	
 	if(ast.limit > 0) {
 		char *limit;
-		limit = (char *) malloc(sizeof(ast.limit));
+		limit = (char *) malloc(sizeof(char *));
 		integer_to_char(ast.limit, limit, 10); // base 10
-		query = (char *) realloc(query, sizeof(query) + strlen(limit));
+		query = realloc(query, strlen(query) + 7 + strlen(limit));
 		strcat(query, " LIMIT ");
 		strcat(query, limit);
 	}
@@ -88,13 +103,23 @@ void integer_to_char(int value, char* str, int base) {
 }
 
 // int main (int argc, char const *argv[]) {
-// 	RelationTable users = new_relation_table("users");
+// 	RelationTable *batman;
+// 	batman = new_relation_table();
+// 	table_instance_name(batman, "batman");
+// 	SelectManager *select_manager = new_select_manager();
+// 	select_manager_instance_table(select_manager, batman);
+// 	select_manager_project(select_manager, new_sql_literal("id"));
+// 	select_manager_project(select_manager, new_sql_literal("*"));
+// 	select_manager_project(select_manager, new_sql_literal("count(*) as all_users"));
 // 	
-// 	SelectManager manager = relation_table_limit(users, 1);
-// 	to_sql_visit(manager.abstract_syntax_tree);
 // 	
-// 	SelectManager other_manager = relation_table_limit(users, 10000000);
-// 	to_sql_visit(other_manager.abstract_syntax_tree);	
+// 	// 
+// 	// 
+// 	// SelectManager *manager = relation_table_project(users, new_sql_literal("name"));
+// 	// 
+// 	// select_manager_project(manager, new_sql_literal("email"));
+// 	// 
+// 	to_sql_visit(select_manager->abstract_syntax_tree);
 // 	
 // 	return 0;
 // }
