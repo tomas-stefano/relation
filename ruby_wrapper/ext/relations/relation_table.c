@@ -23,20 +23,20 @@ VALUE relation_table_get_name(VALUE self) {
 	return rb_str_new2(table->name);
 }
 
-VALUE relation_table_limit_wrapper(VALUE self, VALUE limit) {
-	VALUE select_manager;
+VALUE relation_table_from_wrapper(VALUE self) {
 	VALUE argv[1];
 	argv[0] = self;
-	select_manager = rb_class_new_instance(1, argv, class_SelectManager);
+	return rb_class_new_instance(1, argv, class_SelectManager);
+}
+
+VALUE relation_table_limit_wrapper(VALUE self, VALUE limit) {
+	VALUE select_manager = relation_table_from_wrapper(self);
 	rb_funcall(select_manager, rb_intern("limit"), 1, limit);
 	return select_manager;
 }
 
 VALUE relation_table_select_wrapper(VALUE self, VALUE projections) {
-	VALUE select_manager;
-	VALUE argv[1];
-	argv[0] = self;
-	select_manager = rb_class_new_instance(1, argv, class_SelectManager);
+	VALUE select_manager = relation_table_from_wrapper(self);
 	rb_funcall(select_manager, rb_intern("select"), 1, projections);
 	return select_manager;
 }
