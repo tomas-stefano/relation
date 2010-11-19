@@ -8,15 +8,14 @@
 #include "relation/tree_manager.h"
 #include "relation/visitors/to_sql.h"
 
+char *append_to_string(char *destination, char *append_string) {
+	destination = realloc(destination, strlen(destination) + strlen(append_string));
+	strcat(destination, append_string);
+}
+
 char *visit_relation_table(RelationTable *table, char *query) {
-	query = realloc(query, strlen(query) + FROM_SIZE);
-	strcat(query, FROM);
-	
-	char *table_name = table->name;
-		
-	query = realloc(query, strlen(query) + strlen(table_name));
-	strcat(query, table_name);
-	
+	query = append_to_string(query, FROM);
+	query = append_to_string(query, table->name);	
 	return query;
 }
 
@@ -26,15 +25,10 @@ char *visit_relation_table(RelationTable *table, char *query) {
 char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
 	if(ast.projections != NULL) {
 		for(; ast.projections != NULL; ast.projections = ast.projections->next) {
-			query = realloc(query, strlen(query) + strlen(ast.projections->sql_literal) + 1);
-			strcat(query, ast.projections->sql_literal);
-			if(ast.projections->next != NULL) {
-				query = realloc(query, strlen(query) + 1);
-				strcat(query, ",");
-			}
+			append_to_string(query, ast.projections->sql_literal);	
+			if(ast.projections->next != NULL) append_to_string(query, ",");
 		}
-		query = realloc(query, strlen(query) + 1);
-		strcat(query, " ");
+		append_to_string(query, " ");
 	}
 	return query;
 }
@@ -42,10 +36,9 @@ char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
 char *visit_relation_limit(int limit_size, char *query) {
 	char *limit;
 	limit = (char *) malloc(sizeof(char *));
-	integer_to_char(limit_size, limit, 10); // base 10
-	query = realloc(query, strlen(query) + 7 + strlen(limit));
-	strcat(query, " LIMIT ");
-	strcat(query, limit);
+	integer_to_char(limit_size, limit, 10);
+	query = append_to_string(query, " LIMIT ");
+	query = append_to_string(query, limit);
 	free(limit);
 	return query;
 }
