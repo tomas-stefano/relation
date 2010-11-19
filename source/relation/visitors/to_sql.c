@@ -8,10 +8,8 @@
 #include "relation/tree_manager.h"
 #include "relation/visitors/to_sql.h"
 
-char *append_to_string(char *destination, char *append_string) {
-	destination = realloc(destination, strlen(destination) + strlen(append_string) + 1);
-	strcat(destination, append_string);
-}
+#include "integer_to_char.h"
+#include "append_to_string.h"
 
 char *visit_relation_table(RelationTable *table, char *query) {
 	query = append_to_string(query, FROM);
@@ -25,7 +23,7 @@ char *visit_relation_table(RelationTable *table, char *query) {
 char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
 	if(ast.projections != NULL) {
 		for(; ast.projections != NULL; ast.projections = ast.projections->next) {
-			query = append_to_string(query, ast.projections->sql_literal);	
+			query = append_to_string(query, ast.projections->sql_literal);
 			if(ast.projections->next != NULL) query = append_to_string(query, ",");
 		}
 		query = append_to_string(query, " ");
@@ -48,16 +46,6 @@ char *visit_relation_limit(int limit_size, char *query) {
 *
 * 
 */
-
-// 
-// #define BUFFER sizeof(char) * 256
-// query = (char *) malloc(BUFFER);
-// 
-// 
-// strcat_tomas(query, ...)
-// int strcat_tomas(s , s )
-// verifique_o_buffer(query, BUFFER);
-
 char *visit_select_statements(SelectStatement ast) {
 	char *query = _assign_select_string();
 	query = visit_syntax_tree_projections(ast, query);
@@ -77,25 +65,3 @@ char *_assign_select_string() {
 	query[7] = NULL;
 	return query;
 }
-
-// int main (int argc, char const *argv[]) {
-// 	RelationTable *batman;
-// 	batman = new_relation_table();
-// 	table_instance_name(batman, "batman");
-// 	SelectManager *select_manager = new_select_manager();
-// 	select_manager_instance_table(select_manager, batman);
-// 	select_manager_project(select_manager, new_sql_literal("id"));
-// 	select_manager_project(select_manager, new_sql_literal("*"));
-// 	select_manager_project(select_manager, new_sql_literal("count(*) as all_users"));
-// 	
-// 	
-// 	// 
-// 	// 
-// 	// SelectManager *manager = relation_table_project(users, new_sql_literal("name"));
-// 	// 
-// 	// select_manager_project(manager, new_sql_literal("email"));
-// 	// 
-// 	to_sql_visit(select_manager->abstract_syntax_tree);
-// 	
-// 	return 0;
-// }

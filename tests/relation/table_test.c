@@ -6,6 +6,9 @@
 #include "relation/select_manager.h"
 #include "relation/tree_manager.h"
 
+#include "integer_to_char.h"
+#include "append_to_string.h"
+
 RelationTable *users;
 RelationTable *posts;
 RelationTable *developers;

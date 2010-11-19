@@ -47,6 +47,7 @@ TestSuite *sql_literal_suite();
 
 /* Libraries Suite */
 TestSuite *integer_to_char_suite();
+TestSuite *append_to_string_suite();
 
 int main(int argc, char **argv) {
 	TestSuite *suite = create_test_suite();
@@ -66,6 +67,7 @@ int main(int argc, char **argv) {
 
 	/* Libraries Suite */
 	add_suite(suite, integer_to_char_suite());
+	add_suite(suite, append_to_string_suite());
 	
 	if (argc > 1)
 	  return run_single_test(suite, argv[1], create_text_reporter());
