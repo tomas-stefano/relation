@@ -3,26 +3,31 @@
 
 ## Description
 
-Relation is is a Relational Algebra in C (like Arel in Ruby).
+Relation is is a Relational Algebra made in C language.
 
-### Based on Arel 2.0.2.
+### Based on Arel, Sequel and DataMapper.
 
-## Why I created this library:
+## Why I'm creating this library:
 
-* It was a <b>motivation</b> to learn <b>C language</b>
-* It was a <b>motivation</b> to learn how Arel does internally
+* It was a <b>motivation</b> to learn <b>C language</b> and how create Wrappers to other languages, like Ruby and Python
 
 ## Actual Results
 
-Generate only simple Queries like:
 
-    SELECT * FROM users;
+### Ruby Wrapper
 
-    SELECT name,email FROM users;
+   users = Relation::Table('users')
 
-	SELECT * FROM users LIMIT 100;
-	
-	SELECT name FROM users LIMIT 1;
+   users.select('*').to_sql
+   => "SELECT * FROM users"
+
+   users.select('*').limit(10).to_sql
+   => "SELECT * FROM users LIMIT 10"
 
 ## Benchmarks
+
+
+Some <b>LITTLE</b> benchmarking about the actual results:
+
+<a href="https://gist.github.com/705274">https://gist.github.com/705274</a>
 

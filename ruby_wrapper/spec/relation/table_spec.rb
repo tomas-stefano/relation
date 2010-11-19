@@ -18,7 +18,7 @@ module Relation
       end
     end
     
-    describe '#select' do      
+    describe '#select' do
       it "should be possible to pass String" do
         users.select("*").to_sql.should == "SELECT * FROM users"
       end
@@ -28,8 +28,7 @@ module Relation
       end
       
       it "should be possible to pass a SqlLiteral" do
-        pending
-        users.select(SqlLiteral.new('name')).to_sql.should == "SELECT name FROM users"
+        users.select(Relation::Nodes::SqlLiteral.new('name')).to_sql.should == "SELECT name FROM users"
       end
       
       it "should be possible to pass many Sql Literals" do
