@@ -8,8 +8,16 @@
 #include "relation/tree_manager.h"
 #include "relation/visitors/to_sql.h"
 
-char *visit_relation_table(RelationTable *table) {
-	return table->name;
+char *visit_relation_table(RelationTable *table, char *query) {
+	query = realloc(query, strlen(query) + FROM_SIZE);
+	strcat(query, FROM);
+	
+	char *table_name = table->name;
+		
+	query = realloc(query, strlen(query) + strlen(table_name));
+	strcat(query, table_name);
+	
+	return query;
 }
 
 /*
@@ -31,6 +39,17 @@ char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
 	return query;
 }
 
+char *visit_relation_limit(int limit_size, char *query) {
+	char *limit;
+	limit = (char *) malloc(sizeof(char *));
+	integer_to_char(limit_size, limit, 10); // base 10
+	query = realloc(query, strlen(query) + 7 + strlen(limit));
+	strcat(query, " LIMIT ");
+	strcat(query, limit);
+	free(limit);
+	return query;
+}
+
 /*
 *
 *
@@ -47,28 +66,10 @@ char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
 // verifique_o_buffer(query, BUFFER);
 
 char *visit_select_statements(SelectStatement ast) {
-	char *query;
-	query = (char *) malloc(sizeof(SELECT_SIZE) + 1);
-	memcpy(query, SELECT, SELECT_SIZE);
-	query[7] = NULL;
-	
+	char *query = _assign_select_string();
 	query = visit_syntax_tree_projections(ast, query);
-	
-	query = realloc(query, strlen(query) + FROM_SIZE);
-	strcat(query, FROM);
-	
-	query = realloc(query, strlen(query) + strlen(visit_relation_table(ast.froms)));
-	strcat(query, visit_relation_table(ast.froms));
-	
-	if(ast.limit > 0) {
-		char *limit;
-		limit = (char *) malloc(sizeof(char *));
-		integer_to_char(ast.limit, limit, 10); // base 10
-		query = realloc(query, strlen(query) + 7 + strlen(limit));
-		strcat(query, " LIMIT ");
-		strcat(query, limit);
-	}
-	
+	query = visit_relation_table(ast.froms, query);
+	if(ast.limit > 0) query = visit_relation_limit(ast.limit, query);
 	return query;
 }
 
@@ -76,40 +77,12 @@ char *to_sql_visit(SelectStatement syntax_tree) {
 	return visit_select_statements(syntax_tree);
 }
 
-void reverse_string(char* begin, char* end) {
-	char aux;	
-	while(end > begin) aux=*end, *end--=*begin, *begin++=aux;
-}
-
-/*
-*
-* Ansi C "itoa" based on Kernighan & Ritchie's "Ansi C"
-* with slight modification to optimize for specific architecture.
-*
-*/	
-void integer_to_char(int value, char* str, int base) {
-	static char num[] = "0123456789abcdefghijklmnopqrstuvwxyz";
-	char* wstr=str;
-	int sign;
-	div_t res;
-	
-	// Validate base
-	if (base<2 || base>35){ *wstr='\0'; return; }
-	
-	// Take care of sign
-	if ((sign=value) < 0) value = -value;
-
-	// Conversion. Number is reversed.
-	do {
-		res = div(value,base);
-		*wstr++ = num[res.rem];
-	} while(value = res.quot);
-	
-	if(sign<0) *wstr++='-';
-	
-	*wstr='\0';	
-	// Reverse string
-	reverse_string(str,wstr-1);	
+char *_assign_select_string() {
+	char *query;
+	query = (char *) malloc(sizeof(SELECT_SIZE) + 1);
+	memcpy(query, SELECT, SELECT_SIZE);
+	query[7] = NULL;
+	return query;
 }
 
 // int main (int argc, char const *argv[]) {

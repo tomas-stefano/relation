@@ -7,7 +7,7 @@ OBJECT_SOURCE = SOURCE.ext('o')
 TEST_UNITS_SOURCE = FileList['tests/*.c', 'tests/*/*.c', 'tests/*/*/*.c']
 OBJECT_TEST_UNITS_SOURCE = TEST_UNITS_SOURCE.ext('o')
 
-FLAGS = "-Wall -Wextra -g"
+FLAGS = "-Wall -Wextra -g -I source/lib -I tests -I source"
 
 module Color
   def self.green
@@ -40,7 +40,7 @@ module RelationTasks
     files.each do |source_file|
       object_file = source_file.ext('o')
       print Color.light_blue
-      sh "cc #{FLAGS} -I source #{extra_options} -c -o #{object_file} #{source_file}"
+      sh "cc #{FLAGS} #{extra_options} -c -o #{object_file} #{source_file}"
       print Color.no_color
     end
   end
@@ -60,7 +60,7 @@ namespace :compile do
     include RelationTasks
     files = [ENV["TEST_FILE"]].compact
     files = files.empty? ? TEST_UNITS_SOURCE : files    
-    compile(files, :dir => 'tests', :extra_options => '-I tests')
+    compile(files, :dir => 'tests')
   end
 end
 

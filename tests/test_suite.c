@@ -45,6 +45,9 @@ TestSuite *relation_table_suite();
 TestSuite *select_manager_suite();
 TestSuite *sql_literal_suite();
 
+/* Libraries Suite */
+TestSuite *integer_to_char_suite();
+
 int main(int argc, char **argv) {
 	TestSuite *suite = create_test_suite();
 	/* Relation Suite */
@@ -61,6 +64,9 @@ int main(int argc, char **argv) {
 	add_suite(suite, select_manager_suite());
 	add_suite(suite, sql_literal_suite());
 
+	/* Libraries Suite */
+	add_suite(suite, integer_to_char_suite());
+	
 	if (argc > 1)
 	  return run_single_test(suite, argv[1], create_text_reporter());
 	else	

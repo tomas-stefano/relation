@@ -1,13 +1,15 @@
 #ifndef TO_SQL_H
 #define TO_SQL_H
 
-char *visit_relation_table(RelationTable *table);
+char *visit_relation_table(RelationTable *table, char *query);
 
 char *visit_select_statements(SelectStatement abstract_syntax_tree);
 
 char *visit_syntax_tree_projections(SelectStatement ast, char *query);
 
 char *to_sql_visit(SelectStatement abstract_syntax_tree);
+
+char *_assign_select_string();
 
 void reverse_string(char* begin, char* end);
 
