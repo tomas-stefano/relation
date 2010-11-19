@@ -9,7 +9,7 @@
 #include "relation/visitors/to_sql.h"
 
 char *append_to_string(char *destination, char *append_string) {
-	destination = realloc(destination, strlen(destination) + strlen(append_string));
+	destination = realloc(destination, strlen(destination) + strlen(append_string) + 1);
 	strcat(destination, append_string);
 }
 
@@ -25,10 +25,10 @@ char *visit_relation_table(RelationTable *table, char *query) {
 char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
 	if(ast.projections != NULL) {
 		for(; ast.projections != NULL; ast.projections = ast.projections->next) {
-			append_to_string(query, ast.projections->sql_literal);	
-			if(ast.projections->next != NULL) append_to_string(query, ",");
+			query = append_to_string(query, ast.projections->sql_literal);	
+			if(ast.projections->next != NULL) query = append_to_string(query, ",");
 		}
-		append_to_string(query, " ");
+		query = append_to_string(query, " ");
 	}
 	return query;
 }
