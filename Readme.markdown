@@ -16,13 +16,13 @@ Relation is is a Relational Algebra made in C language.
 
 ### Ruby Wrapper
 
-   users = Relation::Table('users')
-
-   users.select('*').to_sql
-   => "SELECT * FROM users"
-
-   users.select('*').limit(10).to_sql
-   => "SELECT * FROM users LIMIT 10"
+     users = Relation::Table('users')
+     
+     users.select('*').to_sql
+     => "SELECT * FROM users"
+     
+     users.select('*').limit(10).to_sql
+     => "SELECT * FROM users LIMIT 10"
 
 ## Benchmarks
 
