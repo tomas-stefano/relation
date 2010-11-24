@@ -9,14 +9,21 @@ typedef struct relation_table {
 
 typedef char *SqlLiteral; /* Alias for pointer to char */
 
+/* TODO: Remove this and change to ArraySqlLiterals */
 typedef struct projections_node {
    SqlLiteral sql_literal;
    struct projections_node *next;
 } Projections;
 
+typedef struct sql_literals {
+	SqlLiterals sql_literals;
+	struct sql_literals *next;
+} ArraySqlLiterals;
+
 typedef struct statement {
-	Projections *projections;   /* Nodes(Linked Lists) of SqlLiterals */
-	RelationTable *froms;       /* Table */
+	Projections *projections;  /* Nodes(Linked Lists) of SqlLiterals */
+	RelationTable *froms;      /* Table */
+	ArraySqlLiterals *wheres;  /* Nodes(Linked Lists) of SqlLiterals */
 	int limit;                 /* Limit */
 } SelectStatement;
 	

@@ -29,12 +29,19 @@ static void project_should_accept_strings() {
 	assert_string_equal(relation_to_sql(select_manager), "SELECT id FROM batman");
 }
 
+static void where_should_return_a_where_clause() {
+	SelectManager *select_manager = new_select_manager();
+	select_manager_instance_table(select_manager, batman);
+	select_manager_where(select_manager, "age > 18 AND vilain = 'Coringa'");
+	assert_string_equal(relation_to_sql(select_manager), "SELECT FROM batman WHERE age > 18 AND vilain = 'Coringa'");
+}
+
 TestSuite *select_manager_suite() {
 	TestSuite *suite = create_test_suite();
 	setup(suite, before_all);
 	
-	add_test(suite, initialize_should_create_a_select_manager_with_relation_table_in_syntax_tree);
-	
+	add_test(suite, initialize_should_create_a_select_manager_with_relation_table_in_syntax_tree);	
 	add_test(suite, project_should_accept_strings);
+	add_test(suite, where_should_return_a_where_clause);
 	return suite;
 }

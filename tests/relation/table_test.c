@@ -69,6 +69,18 @@ static void limit_should_pass_a_high_number() {
 	assert_string_equal(relation_to_sql(manager), "SELECT * FROM users LIMIT 100000000");
 }
 
+static void where_should_return_a_tree_manager() {
+	SelectManager *manager = relation_table_where(users, "id > 1");
+	select_manager_project(manager, new_sql_literal("id"));
+	assert_string_equal(relation_to_sql(manager), "SELECT id FROM users WHERE id > 1");
+}
+
+static void where_should_construct_the_where_clauses() {
+	SelectManager *manager = relation_table_where(users, "login = 'tomas' AND password = 'secret'");
+	select_manager_project(manager, new_sql_literal("login"));
+	assert_string_equal(relation_to_sql(manager), "SELECT login FROM users WHERE login = 'tomas' AND password = 'secret'");
+}
+
 TestSuite *relation_table_suite() {
 	TestSuite *suite = create_test_suite();
 	
@@ -91,6 +103,10 @@ TestSuite *relation_table_suite() {
 	/* describe #limit */
 	add_test(suite, limit_should_add_a_limit_number);
 	add_test(suite, limit_should_pass_a_high_number);
+	
+	/* describe #where */
+	add_test(suite, where_should_return_a_tree_manager);
+	add_test(suite, where_should_construct_the_where_clauses);
 	
 	return suite;
 }

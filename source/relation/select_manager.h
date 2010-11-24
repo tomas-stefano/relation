@@ -11,4 +11,6 @@ SelectManager *select_manager_from(SelectManager *select_manager, RelationTable 
 
 SelectManager *select_manager_limit(SelectManager *select_manager, int limit_number);
 
+SelectManager *select_manager_where(SelectManager *select_manager, char *expression);
+
 #endif

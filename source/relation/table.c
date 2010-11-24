@@ -31,3 +31,7 @@ SelectManager *relation_table_project(RelationTable *table, SqlLiteral sql_liter
 SelectManager *relation_table_limit(RelationTable *table, int limit_number) {
 	return select_manager_limit(relation_table_from(table), limit_number);
 }
+
+SelectManager *relation_table_where(RelationTable *table, char *expression) {
+	return select_manager_where(relation_table_from(table), expression);
+}

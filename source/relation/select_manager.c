@@ -67,3 +67,7 @@ SelectManager *select_manager_limit(SelectManager *select_manager, int limit_num
 	select_manager->abstract_syntax_tree.limit = limit_number;
 	return select_manager;
 }
+
+SelectManager *select_manager_where(SelectManager *select_manager, char *expression) {
+	return select_manager;
+}

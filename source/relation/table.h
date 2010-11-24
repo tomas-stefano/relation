@@ -13,4 +13,6 @@ SelectManager *relation_table_project(RelationTable *table, SqlLiteral sql_liter
 
 SelectManager *relation_table_limit(RelationTable *table, int limit_number);
 
+SelectManager *relation_table_where(RelationTable *table, char *expression);
+
 #endif
