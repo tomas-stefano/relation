@@ -27,6 +27,8 @@ Relation is is a Relational Algebra made in C language.
 ## Benchmarks
 
 
+### Benchmarks Ruby Wrapper
+
 Some <b>LITTLE</b> benchmarking about the actual results:
 
 <a href="https://gist.github.com/705274">https://gist.github.com/705274</a>
