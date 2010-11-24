@@ -4,19 +4,20 @@ static ID id_limit;
 static ID id_select;
 
 static void relation_table_free(void *pointer) {
+	free(pointer);
 }
 
 static VALUE allocate_relation_table(VALUE klass) {
 	RelationTable *table = new_relation_table();
 	VALUE object;
-	object = Data_Wrap_Struct(klass, 0, relation_table_free, table);
+	object = Data_Wrap_Struct(klass, 0, relation_table_free, table);	
 	return object;
 }
 
 VALUE relation_table_initialize(VALUE self, VALUE name) {
 	RelationTable *table;
 	Data_Get_Struct(self, RelationTable, table);
-	table_instance_name(table, StringValuePtr(name));
+	table_instance_name(table, StringValuePtr(name));	
 	return self;
 }
 

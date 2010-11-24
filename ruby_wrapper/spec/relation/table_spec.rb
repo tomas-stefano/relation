@@ -2,13 +2,16 @@ require 'spec_helper'
 
 module Relation
   describe Table do
+    
     let(:users) { Table.new('users') }
     let(:developers) { Table.new('developers') }
     
     describe '#name' do
+      
       it "should return the name of the table" do
         users.name.should == "users"
       end
+      
       it "should return the table name" do
         developers.name.should == "developers"
       end

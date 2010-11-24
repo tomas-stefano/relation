@@ -9,7 +9,7 @@ Relation is is a Relational Algebra made in C language.
 
 ## Why I'm creating this library:
 
-* It was a <b>motivation</b> to learn <b>C language</b> and how create Wrappers to other languages, like Ruby and Python
+* I want to learn <b>C language</b> and how create Wrappers to other languages, like Ruby and Python! (and this is a better way to do it! I think)
 
 ## Actual Results
 

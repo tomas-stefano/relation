@@ -48,7 +48,7 @@ SelectManager *select_manager_from(SelectManager *select_manager, RelationTable 
 */
 SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral sql_literal) {
 	Projections *projection;
-	projection = (Projections *) malloc(sizeof(Projections) + 1); // +1 because the '\0' (I think =\ )
+	projection = (Projections *) malloc(sizeof(Projections) + 1); // +1 because the '\0' (I think =\ )	
 	projection->sql_literal = sql_literal;
 	projection->next = NULL;
 	if(select_manager->abstract_syntax_tree.projections == NULL) {
@@ -58,6 +58,8 @@ SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral 
 		projection->next = select_manager->abstract_syntax_tree.projections;
 		select_manager->abstract_syntax_tree.projections = projection;
 	}
+	// TODO
+	// free(projection);
 	return select_manager;
 }
 
