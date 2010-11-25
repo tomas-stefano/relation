@@ -7,6 +7,8 @@ char *visit_select_statements(SelectStatement abstract_syntax_tree);
 
 char *visit_syntax_tree_projections(SelectStatement ast, char *query);
 
+char *visit_relation_where(ArraySqlLiterals *literals, char *query);
+
 char *to_sql_visit(SelectStatement abstract_syntax_tree);
 
 char *_assign_select_string();
@@ -15,5 +17,6 @@ char *_assign_select_string();
 #define SELECT_SIZE 7
 #define FROM "FROM "
 #define FROM_SIZE 5
+#define WHERE "WHERE "
 
 #endif

@@ -11,22 +11,29 @@
 #include "integer_to_char.h"
 #include "append_to_string.h"
 
+/*
+*
+*/
+char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
+	for(; ast.projections != NULL; ast.projections = ast.projections->next) {
+		query = append_to_string(query, ast.projections->sql_literal);
+		if(ast.projections->next != NULL) query = append_to_string(query, ",");
+	}
+	query = append_to_string(query, " ");
+	return query;
+}
+
 char *visit_relation_table(RelationTable *table, char *query) {
 	query = append_to_string(query, FROM);
 	query = append_to_string(query, table->name);	
 	return query;
 }
 
-/*
-*
-*/
-char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
-	if(ast.projections != NULL) {
-		for(; ast.projections != NULL; ast.projections = ast.projections->next) {
-			query = append_to_string(query, ast.projections->sql_literal);
-			if(ast.projections->next != NULL) query = append_to_string(query, ",");
-		}
-		query = append_to_string(query, " ");
+char *visit_relation_where(ArraySqlLiterals *literals, char *query) {
+	append_to_string(query, " ");
+	for(; literals != NULL; literals = literals->next) {
+		append_to_string(query, WHERE);
+		append_to_string(query, literals->sql_literal);
 	}
 	return query;
 }
@@ -48,8 +55,9 @@ char *visit_relation_limit(int limit_size, char *query) {
 */
 char *visit_select_statements(SelectStatement ast) {
 	char *query = _assign_select_string();
-	query = visit_syntax_tree_projections(ast, query);
+	if(ast.projections != NULL)	query = visit_syntax_tree_projections(ast, query);
 	query = visit_relation_table(ast.froms, query);
+	if(ast.wheres != NULL) query = visit_relation_where(ast.wheres, query);
 	if(ast.limit > 0) query = visit_relation_limit(ast.limit, query);
 	return query;
 }
