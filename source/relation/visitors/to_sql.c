@@ -11,9 +11,6 @@
 #include "integer_to_char.h"
 #include "append_to_string.h"
 
-/*
-*
-*/
 char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
 	for(; ast.projections != NULL; ast.projections = ast.projections->next) {
 		query = append_to_string(query, ast.projections->sql_literal);
@@ -31,9 +28,10 @@ char *visit_relation_table(RelationTable *table, char *query) {
 
 char *visit_relation_where(ArraySqlLiterals *literals, char *query) {
 	append_to_string(query, " ");
+	append_to_string(query, WHERE);
 	for(; literals != NULL; literals = literals->next) {
-		append_to_string(query, WHERE);
 		append_to_string(query, literals->sql_literal);
+		if(literals->next != NULL) query = append_to_string(query, " AND ");
 	}
 	return query;
 }
@@ -48,11 +46,6 @@ char *visit_relation_limit(int limit_size, char *query) {
 	return query;
 }
 
-/*
-*
-*
-* 
-*/
 char *visit_select_statements(SelectStatement ast) {
 	char *query = _assign_select_string();
 	if(ast.projections != NULL)	query = visit_syntax_tree_projections(ast, query);
