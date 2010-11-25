@@ -1,35 +1,23 @@
 # Relation Makefile
 # Copyright (C) 2010 Tomás D'Stefano
 
-uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
 OPTIMIZATION?=-O2
-ifeq ($(uname_S),SunOS)
-  CFLAGS?= -std=c99 -pedantic $(OPTIMIZATION) -Wall -W -D__EXTENSIONS__ -D_XPG6
-  CCLINK?= -ldl -lnsl -lsocket -lm -lpthread
-else
-  CFLAGS?= -std=c99 -pedantic $(OPTIMIZATION) -Wall -W $(ARCH) $(PROF)
-  CCLINK?= -lm -pthread
-  TEST_C_LINK = -lcgreen
-endif
-
-CCOPT= $(CFLAGS) $(CCLINK) $(ARCH) $(PROF)
+LOADPATH?= -I source -I source/lib
+CFLAGS?= $(LOADPATH) -std=c99 -pedantic $(OPTIMIZATION) -Wall -W $(ARCH) $(PROF)
+CCLINK?= -lm -pthread
+CCOPT= $(CFLAGS) $(LOAD_PATH) $(CCLINK) $(ARCH) $(PROF)
 DEBUG?= -g -rdynamic -ggdb 
 
 INSTALL_TOP= /usr/local
 INSTALL_BIN= $(INSTALL_TOP)/bin
 INSTALL= cp -p
 
-# OBJ = 
-# BENCHOBJ = 
-
-BENCHMARK_PROGRAM = relation-benchmark
+BENCHMARK_PROGRAM = benchmarks/relation-benchmark
+BENCHOBJ = benchmarks/simple_query.o source/relation.o source/lib/append_to_string.o source/lib/integer_to_char.o source/relation/select_manager.o source/relation/sql_literal.o source/relation/table.o source/relation/tree_manager.o source/relation/nodes/select_statement.o source/relation/visitors/to_sql.o source/relation/visitors/visitor.o
 
 all: relation-benchmark	
 
 # Deps (use make dep to generate this)
-ae_epoll.o: ae_epoll.c
-ae_kqueue.o: ae_kqueue.c
-ae_select.o: ae_select.c
 
 relation-benchmark: $(BENCHOBJ)
 	$(CC) -o $(BENCHMARK_PROGRAM) $(CCOPT) $(DEBUG) $(BENCHOBJ)
@@ -41,7 +29,7 @@ dep:
 	$(CC) -MM *.c
 
 bench:
-	benchmark/relation-benchmark
+	benchmarks/relation-benchmark
 
 log:
 	git log '--pretty=format:%ad %s (%cn)' --date=short
