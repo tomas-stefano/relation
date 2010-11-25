@@ -4,7 +4,7 @@
 OPTIMIZATION?=-O2
 LOADPATH?= -I source -I source/lib
 CFLAGS?= $(LOADPATH) -std=c99 -pedantic $(OPTIMIZATION) -Wall -W $(ARCH) $(PROF)
-CCLINK?= -lm -pthread
+CCLINK?= -lm -pthread -lprofiler
 CCOPT= $(CFLAGS) $(LOAD_PATH) $(CCLINK) $(ARCH) $(PROF)
 DEBUG?= -g -rdynamic -ggdb 
 

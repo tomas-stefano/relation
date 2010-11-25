@@ -1,5 +1,6 @@
 
 TEST_EXECUTABLE = 'sql_relation_test_suite'
+BENCHMARK_EXECUTABLE = 'benchmarks/relation-benchmark'
 
 SOURCE = FileList['source/*.c', 'source/*/*.c', 'source/*/*/*.c']
 OBJECT_SOURCE = SOURCE.ext('o')
@@ -110,6 +111,7 @@ CLEAN.include('tests/*.o',
               'source/*.o', '*.o',
               'source/*/*.o', 'source/*/*/*.o'
               )
-CLOBBER.include(TEST_EXECUTABLE)
+
+CLOBBER.include(TEST_EXECUTABLE, BENCHMARK_EXECUTABLE);
 
 task :default => :test
