@@ -14,12 +14,12 @@ module Relation
       
       it "should pass many selects" do
         manager.select('name').select('email')
-        manager.to_sql.should == "SELECT email,name FROM people"
+        manager.to_sql.should == "SELECT name,email FROM people"
       end
       
       it "should pass an array of selects" do
         manager.select('name', 'email', 'age')
-        manager.to_sql.should == "SELECT age,email,name FROM people"
+        manager.to_sql.should == "SELECT name,email,age FROM people"
       end
     end
   

@@ -53,6 +53,10 @@ module Relation
     
     describe '#where' do
       
+      it "should return a tree manager" do
+        manager = users.where("login = 'tomas'").to_sql.should == "SELECT FROM users WHERE login = 'tomas'"
+      end
+      
     end
     
     describe 'putting_all_together' do

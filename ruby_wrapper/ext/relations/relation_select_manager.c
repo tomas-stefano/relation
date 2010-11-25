@@ -28,6 +28,7 @@ VALUE relation_select_manager_select_wrapper(VALUE self, VALUE projections) {
 	for(i = 0; i < RARRAY_LEN(projections); i++) {
 		select_manager_project(select_manager, StringValuePtr(RARRAY_PTR(projections)[i]));
 	}
+	
 	return self;
 }
 
@@ -35,6 +36,13 @@ VALUE relation_select_manager_limit_wrapper(VALUE self, VALUE limit) {
 	SelectManager *select_manager;
 	Data_Get_Struct(self, SelectManager, select_manager);
 	select_manager_limit(select_manager, FIX2INT(limit));
+	return self;
+}
+
+VALUE relation_select_manager_where_wrapper(VALUE self, VALUE condition) {
+	SelectManager *select_manager;
+	Data_Get_Struct(self, SelectManager, select_manager);
+	select_manager_where(select_manager, StringValuePtr(condition));
 	return self;
 }
 
@@ -48,4 +56,5 @@ void Init_relation_select_manager() {
 	rb_define_method(class_SelectManager, "initialize", relation_select_manager_initialize, 1);
 	rb_define_method(class_SelectManager, "select", relation_select_manager_select_wrapper, -2);
 	rb_define_method(class_SelectManager, "limit", relation_select_manager_limit_wrapper, 1);
+	rb_define_method(class_SelectManager, "where", relation_select_manager_where_wrapper, 1);
 }
