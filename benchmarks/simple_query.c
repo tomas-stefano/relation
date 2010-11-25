@@ -23,10 +23,12 @@ int main() {
 	table_instance_name(developers, "developers");
 	
 	printf("Generating query: SELECT * from developers LIMIT 1\n");
-	
-	for(; i < 1000000; i++) {
-		create_simple_query(developers);
-	}
+
+	// printf("Generating 1.000.000 Queries");
+	// for(; i < 1000000; i++) create_simple_query(developers);
+
+	printf("Generating 10.000.000 Queries");
+	for(; i < 10000000; i++) create_simple_query(developers);
 	
 	return 0;
 }

@@ -63,6 +63,6 @@ char *_assign_select_string() {
 	char *query;
 	query = (char *) malloc(sizeof(SELECT_SIZE) + 1);
 	memcpy(query, SELECT, SELECT_SIZE);
-	query[7] = NULL;
+	// query[7] = NULL;
 	return query;
 }

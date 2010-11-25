@@ -4,6 +4,7 @@
 #include "relation/select_manager.h"
 
 SelectManager *new_select_manager() {
+	// TODO: Verify Malloc
 	SelectManager *select_manager = (SelectManager *) malloc(sizeof(SelectManager));
 	return select_manager;
 }
@@ -12,6 +13,7 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 	select_manager->abstract_syntax_tree.froms = table;
 	select_manager->abstract_syntax_tree.limit = 0;
 	select_manager->abstract_syntax_tree.projections = NULL;
+	select_manager->abstract_syntax_tree.projections_tail = NULL;
 	select_manager->abstract_syntax_tree.wheres = NULL;	
 	return select_manager;
 }
@@ -42,16 +44,27 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 */
 SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral sql_literal) {
 	ArraySqlLiterals *projection;
+	
+	// TODO: Verify malloc	
 	projection = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // +1 because the '\0' (I think =\ )	
 	projection->sql_literal = sql_literal;
 	projection->next = NULL;
+	
 	if(select_manager->abstract_syntax_tree.projections == NULL) {
 		select_manager->abstract_syntax_tree.projections = projection;
+		select_manager->abstract_syntax_tree.projections_tail = projection;
 	}
 	else {
-		projection->next = select_manager->abstract_syntax_tree.projections;
-		select_manager->abstract_syntax_tree.projections = projection;
+		select_manager->abstract_syntax_tree.projections_tail->next = projection;
+		select_manager->abstract_syntax_tree.projections_tail = projection;
 	}
+	
+	// if(select_manager->abstract_syntax_tree.projections == NULL) select_manager->abstract_syntax_tree.projections = projection;
+	// else {
+	// 	projection->next = select_manager->abstract_syntax_tree.projections;
+	// 	select_manager->abstract_syntax_tree.projections = projection;
+	// }
+
 	// TODO
 	// free(projection);
 	return select_manager;
@@ -64,7 +77,7 @@ SelectManager *select_manager_limit(SelectManager *select_manager, int limit_num
 
 SelectManager *select_manager_where(SelectManager *select_manager, char *expression) {
 	ArraySqlLiterals *literal;
-	literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals));
+	literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // TODO: Verify malloc
 	
 	literal->sql_literal = expression;
 	literal->next = NULL;

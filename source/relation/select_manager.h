@@ -11,6 +11,4 @@ SelectManager *select_manager_limit(SelectManager *select_manager, int limit_num
 
 SelectManager *select_manager_where(SelectManager *select_manager, char *expression);
 
-SelectManager *_add_literal_to(SelectManager *select_manager, SqlLiteral sql_literal, ArraySqlLiterals *array_literals);
-
 #endif

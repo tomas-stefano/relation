@@ -16,6 +16,7 @@ typedef struct sql_literals {
 
 typedef struct statement {
 	ArraySqlLiterals *projections;  /* Nodes(Linked Lists) of SqlLiterals */
+	ArraySqlLiterals *projections_tail; /* Pointer to tail of projections */
 	RelationTable *froms;           /* Table */
 	ArraySqlLiterals *wheres;       /* Nodes(Linked Lists) of SqlLiterals */
 	int limit;                      /* Limit */

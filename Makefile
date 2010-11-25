@@ -15,7 +15,7 @@ INSTALL= cp -p
 BENCHMARK_PROGRAM = benchmarks/relation-benchmark
 BENCHOBJ = benchmarks/simple_query.o source/relation.o source/lib/append_to_string.o source/lib/integer_to_char.o source/relation/select_manager.o source/relation/sql_literal.o source/relation/table.o source/relation/tree_manager.o source/relation/nodes/select_statement.o source/relation/visitors/to_sql.o source/relation/visitors/visitor.o
 HEAPCHECKER = -ltcmalloc
-CPUPROFILE = -lprofiler
+# CPUPROFILE = -lprofiler
 
 all: relation-benchmark	
 

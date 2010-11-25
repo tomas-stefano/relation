@@ -47,14 +47,14 @@ static void project_can_pass_all_the_fields_in_the_table() {
 static void project_should_be_possible_to_have_many_literals() {
 	SelectManager *manager = relation_table_project(users, new_sql_literal("name"));
 	select_manager_project(manager, new_sql_literal("email"));
-	assert_string_equal(relation_to_sql(manager), "SELECT email,name FROM users");
+	assert_string_equal(relation_to_sql(manager), "SELECT name,email FROM users");
 }
 
 static void project_should_be_possible_to_have_many_literals_including_count() {
 	SelectManager *manager = relation_table_project(users, new_sql_literal("name"));
 	select_manager_project(manager, new_sql_literal("email"));
 	select_manager_project(manager, new_sql_literal("count(*) as all_users"));
-	assert_string_equal(relation_to_sql(manager), "SELECT count(*) as all_users,email,name FROM users");
+	assert_string_equal(relation_to_sql(manager), "SELECT name,email,count(*) as all_users FROM users");
 }
 
 static void limit_should_add_a_limit_number() {
