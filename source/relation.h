@@ -15,11 +15,12 @@ typedef struct sql_literals {
 } ArraySqlLiterals;
 
 typedef struct statement {
-	ArraySqlLiterals *projections;  /* Nodes(Linked Lists) of SqlLiterals */
+	ArraySqlLiterals *projections;      /* Nodes(Linked Lists) of SqlLiterals */
 	ArraySqlLiterals *projections_tail; /* Pointer to tail of projections */
-	RelationTable *froms;           /* Table */
-	ArraySqlLiterals *wheres;       /* Nodes(Linked Lists) of SqlLiterals */
-	int limit;                      /* Limit */
+	RelationTable *froms;               /* Table */
+	ArraySqlLiterals *wheres;           /* Nodes(Linked Lists) of SqlLiterals */
+	ArraySqlLiterals *wheres_tail;      /* Pointer to tail of wheres */
+	int limit;                          /* Limit */
 } SelectStatement;
 	
 typedef struct manager_select {
