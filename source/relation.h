@@ -16,7 +16,7 @@ typedef struct projections_node {
 } Projections;
 
 typedef struct sql_literals {
-	SqlLiterals sql_literals;
+	SqlLiteral sql_literal;
 	struct sql_literals *next;
 } ArraySqlLiterals;
 
