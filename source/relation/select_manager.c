@@ -16,13 +16,6 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 }
 
 /*
-
-*/
-SelectManager *select_manager_from(SelectManager *select_manager, RelationTable *table) {
-	return select_manager;
-}
-
-/*
    Append to the first element in the Projections linked list
 
 	Example 1 - When not have projections:

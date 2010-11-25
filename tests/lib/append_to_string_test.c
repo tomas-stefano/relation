@@ -2,8 +2,8 @@
 #include "append_to_string.h"
 
 static char *allocate_string() {
-	char *destination = (char *) malloc(sizeof(1));
-	destination[0] = NULL;
+	char *destination = (char *) malloc(sizeof(2));
+	destination[0] = '\0';
 	return destination;
 }
 
