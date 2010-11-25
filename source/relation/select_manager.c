@@ -17,7 +17,7 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 }
 
 /*
-   Append to the first element in the Projections linked list
+   Append to the first element in the projections linked list
 
 	Example 1 - When not have projections:
 	
@@ -41,8 +41,8 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 
 */
 SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral sql_literal) {
-	Projections *projection;
-	projection = (Projections *) malloc(sizeof(Projections) + 1); // +1 because the '\0' (I think =\ )	
+	ArraySqlLiterals *projection;
+	projection = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // +1 because the '\0' (I think =\ )	
 	projection->sql_literal = sql_literal;
 	projection->next = NULL;
 	if(select_manager->abstract_syntax_tree.projections == NULL) {
