@@ -27,7 +27,7 @@ module Relation
       end
       
       it "should be possible to pass projections in a chain methods" do
-        users.select("name").select("email").to_sql.should == "SELECT email,name FROM users"
+        users.select("name").select("email").to_sql.should == "SELECT name,email FROM users"
       end
       
       it "should be possible to pass a SqlLiteral" do
@@ -36,7 +36,7 @@ module Relation
       
       it "should be possible to pass many Sql Literals" do
         pending
-        users.select(SqlLiteral.new('password'), SqlLiteral.new('password_confirmation')).to_sql.should == "SELECT password_confirmation,password FROM users"
+        users.select(SqlLiteral.new('password'), SqlLiteral.new('password_confirmation')).to_sql.should == "SELECT password,password_confirmation FROM users"
       end
       
     end
