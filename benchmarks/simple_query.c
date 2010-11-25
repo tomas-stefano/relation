@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/time.h>
 
 #include "relation.h"
 #include "relation/sql_literal.h"
@@ -23,7 +24,7 @@ int main() {
 	
 	printf("Generating query: SELECT * from developers LIMIT 1\n");
 	
-	for(; i < 10000; i++) {
+	for(; i < 1000000; i++) {
 		create_simple_query(developers);
 	}
 	

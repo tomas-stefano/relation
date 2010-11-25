@@ -7,3 +7,4 @@ tmp
 *.so
 .bundle
 *.bundle
+.DS_Store
