@@ -79,7 +79,7 @@ static void where_should_construct_the_where_clauses() {
 	SelectManager *manager = relation_table_where(users, "login = 'tomas'");
 	select_manager_where(manager, "password = 'secret'");
 	select_manager_project(manager, new_sql_literal("login"));
-	assert_string_equal(relation_to_sql(manager), "SELECT login FROM users WHERE login = 'tomas' AND password = 'secret'");
+assert_string_equal(relation_to_sql(manager),"SELECT login FROM users WHERE login = 'tomas' AND password = 'secret'");
 }
 
 TestSuite *relation_table_suite() {

@@ -42,8 +42,8 @@ VALUE relation_table_select_wrapper(VALUE self, VALUE projections) {
 	return rb_funcall(relation_table_from_wrapper(self), id_select, 1, projections);
 }
 
-VALUE relation_table_where_wrapper(VALUE self, VALUE condition) {
-	return rb_funcall(relation_table_from_wrapper(self), id_where, 1, condition);
+VALUE relation_table_where_wrapper(VALUE self, VALUE conditions) {
+	return rb_funcall(relation_table_from_wrapper(self), id_where, 1, conditions);
 }
 
 void Init_relation_table() {
@@ -58,7 +58,8 @@ void Init_relation_table() {
 	rb_define_method(class_Table, "select", relation_table_select_wrapper, 1);
 	rb_define_method(class_Table, "limit", relation_table_limit_wrapper, 1);
 	rb_define_method(class_Table, "where", relation_table_where_wrapper, 1);
-	
+
+	/* Name Methods to call */
 	id_select = rb_intern("select");
 	id_limit = rb_intern("limit");
 	id_where = rb_intern("where");

@@ -39,10 +39,10 @@ VALUE relation_select_manager_limit_wrapper(VALUE self, VALUE limit) {
 	return self;
 }
 
-VALUE relation_select_manager_where_wrapper(VALUE self, VALUE condition) {
+VALUE relation_select_manager_where_wrapper(VALUE self, VALUE conditions) {
 	SelectManager *select_manager;
 	Data_Get_Struct(self, SelectManager, select_manager);
-	select_manager_where(select_manager, StringValuePtr(condition));
+	select_manager_where(select_manager, StringValuePtr(conditions));
 	return self;
 }
 

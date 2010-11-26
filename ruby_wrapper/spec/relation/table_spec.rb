@@ -54,7 +54,12 @@ module Relation
     describe '#where' do
       
       it "should return a tree manager" do
-        manager = users.where("login = 'tomas'").to_sql.should == "SELECT FROM users WHERE login = 'tomas'"
+        users.where("login = 'tomas'").to_sql.should == "SELECT FROM users WHERE login = 'tomas'"
+      end
+      
+      it "should return a tree manager" do
+        manager = developers.where("id > 1")
+        manager.select('name').to_sql.should == "SELECT name FROM developers WHERE id > 1"
       end
       
     end

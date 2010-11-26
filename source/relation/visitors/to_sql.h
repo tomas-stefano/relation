@@ -7,7 +7,7 @@ char *visit_select_statements(SelectStatement abstract_syntax_tree);
 
 char *visit_syntax_tree_projections(SelectStatement ast, char *query);
 
-char *visit_relation_where(ArraySqlLiterals *literals, char *query);
+char *visit_relation_where(SelectStatement ast, char *query);
 
 char *to_sql_visit(SelectStatement abstract_syntax_tree);
 

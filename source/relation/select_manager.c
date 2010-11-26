@@ -15,6 +15,7 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 	select_manager->abstract_syntax_tree.projections = NULL;
 	select_manager->abstract_syntax_tree.projections_tail = NULL;
 	select_manager->abstract_syntax_tree.wheres = NULL;	
+	select_manager->abstract_syntax_tree.wheres_tail = NULL;	
 	return select_manager;
 }
 
@@ -44,19 +45,19 @@ SelectManager *select_manager_limit(SelectManager *select_manager, int limit_num
 	return select_manager;
 }
 
-SelectManager *select_manager_where(SelectManager *select_manager, char *expression) {
+SelectManager *select_manager_where(SelectManager *select_manager, SqlLiteral expression) {
 	ArraySqlLiterals *literal;
 	literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // TODO: Verify malloc
 	
 	literal->sql_literal = expression;
 	literal->next = NULL;
-
+	
 	if(select_manager->abstract_syntax_tree.wheres == NULL)
 		select_manager->abstract_syntax_tree.wheres = literal;
 	else 
 		select_manager->abstract_syntax_tree.wheres_tail->next = literal;
 		
 	select_manager->abstract_syntax_tree.wheres_tail = literal;
-		
+
 	return select_manager;
 }

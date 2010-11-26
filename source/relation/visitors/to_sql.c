@@ -26,12 +26,12 @@ char *visit_relation_table(RelationTable *table, char *query) {
 	return query;
 }
 
-char *visit_relation_where(ArraySqlLiterals *literals, char *query) {
-	append_to_string(query, " ");
-	append_to_string(query, WHERE);
-	for(; literals != NULL; literals = literals->next) {
-		append_to_string(query, literals->sql_literal);
-		if(literals->next != NULL) query = append_to_string(query, " AND ");
+char *visit_relation_where(SelectStatement ast, char *query) {
+	query = append_to_string(query, " ");
+	query = append_to_string(query, WHERE);
+	for(; ast.wheres != NULL; ast.wheres = ast.wheres->next) {		
+		query = append_to_string(query, ast.wheres->sql_literal);		
+		if(ast.wheres->next != NULL) query = append_to_string(query, " AND ");
 	}
 	return query;
 }
@@ -50,7 +50,7 @@ char *visit_select_statements(SelectStatement ast) {
 	char *query = _assign_select_string();
 	if(ast.projections != NULL)	query = visit_syntax_tree_projections(ast, query);
 	query = visit_relation_table(ast.froms, query);
-	if(ast.wheres != NULL) query = visit_relation_where(ast.wheres, query);
+	if(ast.wheres != NULL) query = visit_relation_where(ast, query);
 	if(ast.limit > 0) query = visit_relation_limit(ast.limit, query);
 	return query;
 }
@@ -63,6 +63,6 @@ char *_assign_select_string() {
 	char *query;
 	query = (char *) malloc(sizeof(SELECT_SIZE) + 1);
 	memcpy(query, SELECT, SELECT_SIZE);
-	// query[7] = NULL;
+	query[7] = NULL;
 	return query;
 }
