@@ -7,6 +7,10 @@ require 'relation'
 @table = Relation::Table.new('users')
 
 def simple_query!
+  @table.select('*').limit(1).to_sql # SELECT * from users LIMIT 1
+end
+
+def with_where!
   @table.select('*').limit(1).where("login = 'tomas'").to_sql # SELECT * from users WHERE login = 'tomas' LIMIT 1
 end
 
@@ -25,6 +29,11 @@ Benchmark.benchmark do |x|
   x.report("1.000.000 Queries ") do
     1_000_000.times do
       simple_query!
+    end
+  end
+  x.report("1.000.000 Queries ") do
+    1_000_000.times do
+      with_where!
     end
   end
   # x.report('10.000.000 Queries') do
