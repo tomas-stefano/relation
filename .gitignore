@@ -1,5 +1,6 @@
 *.o
 sql_relation_test_suite
+benchmarks/relation-benchmark
 *.rbc
 *~
 *.sw?

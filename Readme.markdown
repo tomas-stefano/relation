@@ -24,8 +24,10 @@ Relation is is a Relational Algebra made in C language.
      users.select('*').limit(10).to_sql
      => "SELECT * FROM users LIMIT 10"
 
-## Benchmarks
+     users.select('name').where("name = 'tomas'").to_sql
+     => "SELECT name FROM users WHERE name = 'tomas'"
 
+## Benchmarks
 
 ### Benchmarks Ruby Wrapper
 
