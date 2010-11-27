@@ -22,6 +22,7 @@ module Relation
     end
     
     describe '#select' do
+      
       it "should be possible to pass String" do
         users.select("*").to_sql.should == "SELECT * FROM users"
       end
@@ -32,11 +33,6 @@ module Relation
       
       it "should be possible to pass a SqlLiteral" do
         users.select(Relation::Nodes::SqlLiteral.new('name')).to_sql.should == "SELECT name FROM users"
-      end
-      
-      it "should be possible to pass many Sql Literals" do
-        pending
-        users.select(SqlLiteral.new('password'), SqlLiteral.new('password_confirmation')).to_sql.should == "SELECT password,password_confirmation FROM users"
       end
       
     end
@@ -62,6 +58,12 @@ module Relation
         manager.select('name').to_sql.should == "SELECT name FROM developers WHERE id > 1"
       end
       
+    end
+
+    describe '#order' do
+      it "should take a order" do
+        users.order('name').to_sql.should == "SELECT FROM users ORDER BY name"        
+      end
     end
     
     describe 'putting_all_together' do

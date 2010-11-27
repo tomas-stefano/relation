@@ -20,6 +20,7 @@ typedef struct statement {
 	RelationTable *froms;               /* Table */
 	ArraySqlLiterals *wheres;           /* Nodes(Linked Lists) of SqlLiterals */
 	ArraySqlLiterals *wheres_tail;      /* Pointer to tail of wheres */
+	SqlLiteral orders;					/* ORDER BY */
 	int limit;                          /* Limit */
 } SelectStatement;
 	

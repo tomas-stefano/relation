@@ -16,6 +16,7 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 	select_manager->abstract_syntax_tree.projections_tail = NULL;
 	select_manager->abstract_syntax_tree.wheres = NULL;	
 	select_manager->abstract_syntax_tree.wheres_tail = NULL;	
+	select_manager->abstract_syntax_tree.orders = NULL;
 	return select_manager;
 }
 
@@ -59,5 +60,10 @@ SelectManager *select_manager_where(SelectManager *select_manager, SqlLiteral ex
 		
 	select_manager->abstract_syntax_tree.wheres_tail = literal;
 
+	return select_manager;
+}
+
+SelectManager *select_manager_order(SelectManager *select_manager, char *expression) {
+	select_manager->abstract_syntax_tree.orders = expression;
 	return select_manager;
 }

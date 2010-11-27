@@ -46,11 +46,19 @@ char *visit_relation_limit(int limit_size, char *query) {
 	return query;
 }
 
+char *visit_relation_order(SelectStatement ast, char *query) {
+	query = append_to_string(query, " ");
+	query = append_to_string(query, ORDER);
+	query = append_to_string(query, ast.orders);
+	return query;
+}
+
 char *visit_select_statements(SelectStatement ast) {
 	char *query = _assign_select_string();
 	if(ast.projections != NULL)	query = visit_syntax_tree_projections(ast, query);
 	query = visit_relation_table(ast.froms, query);
 	if(ast.wheres != NULL) query = visit_relation_where(ast, query);
+	if(ast.orders != NULL) query = visit_relation_order(ast, query);
 	if(ast.limit > 0) query = visit_relation_limit(ast.limit, query);
 	return query;
 }
@@ -61,8 +69,8 @@ char *to_sql_visit(SelectStatement syntax_tree) {
 
 char *_assign_select_string() {
 	char *query;
-	query = (char *) malloc(sizeof(SELECT_SIZE) + 1);
+	query = (char *) malloc(sizeof(SELECT_SIZE));
 	memcpy(query, SELECT, SELECT_SIZE);
-	query[7] = NULL;
+	// query[7] = NULL;
 	return query;
 }

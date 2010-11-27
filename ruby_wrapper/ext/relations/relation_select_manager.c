@@ -46,6 +46,13 @@ VALUE relation_select_manager_where_wrapper(VALUE self, VALUE conditions) {
 	return self;
 }
 
+VALUE relation_select_manager_order_wrapper(VALUE self, VALUE expression) {
+	SelectManager *select_manager;
+	Data_Get_Struct(self, SelectManager, select_manager);
+	select_manager_order(select_manager, StringValuePtr(expression));
+	return self;
+}
+
 void Init_relation_select_manager() {
 	class_SelectManager = rb_define_class_under(module_Relation, "SelectManager", class_TreeManager);
 	
@@ -57,4 +64,5 @@ void Init_relation_select_manager() {
 	rb_define_method(class_SelectManager, "select", relation_select_manager_select_wrapper, -2);
 	rb_define_method(class_SelectManager, "limit", relation_select_manager_limit_wrapper, 1);
 	rb_define_method(class_SelectManager, "where", relation_select_manager_where_wrapper, 1);
+	rb_define_method(class_SelectManager, "order", relation_select_manager_order_wrapper, 1);
 }

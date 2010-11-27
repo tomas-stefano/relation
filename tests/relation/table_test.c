@@ -82,6 +82,11 @@ static void where_should_construct_the_where_clauses() {
 assert_string_equal(relation_to_sql(manager),"SELECT login FROM users WHERE login = 'tomas' AND password = 'secret'");
 }
 
+static void order_should_add_the_order_clause() {
+	SelectManager *manager = relation_table_order(developers, "name");
+	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers ORDER BY name");
+}
+
 TestSuite *relation_table_suite() {
 	TestSuite *suite = create_test_suite();
 	
@@ -108,6 +113,9 @@ TestSuite *relation_table_suite() {
 	/* describe #where */
 	add_test(suite, where_should_return_a_tree_manager);
 	add_test(suite, where_should_construct_the_where_clauses);
+	
+	/* describe #order */
+	add_test(suite, order_should_add_the_order_clause);
 	
 	return suite;
 }

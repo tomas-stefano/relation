@@ -15,4 +15,6 @@ SelectManager *relation_table_limit(RelationTable *table, int limit_number);
 
 SelectManager *relation_table_where(RelationTable *table, char *expression);
 
+SelectManager *relation_table_order(RelationTable *table, char *expression);
+
 #endif

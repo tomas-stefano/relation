@@ -29,6 +29,13 @@ module Relation
       end
     end
     
+    describe '#order' do
+      
+      it "should accept strings" do
+        manager.select('*').order('email').to_sql.should == "SELECT * FROM people ORDER BY email"
+      end
+    end
+    
     describe '.superclass' do
       it "should be the class TreeManager" do
         SelectManager.superclass.should equal TreeManager

@@ -1,6 +1,6 @@
 
-TEST_EXECUTABLE = 'sql_relation_test_suite'
-BENCHMARK_EXECUTABLE = 'benchmarks/relation-benchmark'
+TEST_EXECUTABLE = 'tests/relation_tests'
+BENCHMARK_EXECUTABLE = 'benchmarks/relation_benchmarks'
 
 SOURCE = FileList['source/*.c', 'source/*/*.c', 'source/*/*/*.c']
 OBJECT_SOURCE = SOURCE.ext('o')

@@ -12,20 +12,24 @@ INSTALL_TOP= /usr/local
 INSTALL_BIN= $(INSTALL_TOP)/bin
 INSTALL= cp -p
 
-BENCHMARK_PROGRAM = benchmarks/relation-benchmark
+TEST_PROGRAM = tests/relation_tests
+
+BENCHMARK_PROGRAM = benchmarks/relation_benchmarks
 BENCHOBJ = benchmarks/simple_query.o source/relation.o source/lib/append_to_string.o source/lib/integer_to_char.o source/relation/select_manager.o source/relation/sql_literal.o source/relation/table.o source/relation/tree_manager.o source/relation/nodes/select_statement.o source/relation/visitors/to_sql.o source/relation/visitors/visitor.o
-HEAPCHECKER = -ltcmalloc
+# HEAPCHECKER = -ltcmalloc
 # CPUPROFILE = -lprofiler
 
-all: relation-benchmark	
+all: relation-test relation-benchmark
 
 # Deps (use make dep to generate this)
+
+relation-test:
 
 relation-benchmark: $(BENCHOBJ)
 	$(CC) $(HEAPCHECKER) $(CPUPROFILE) -o $(BENCHMARK_PROGRAM) $(CCOPT) $(DEBUG) $(BENCHOBJ)
 
 clean:
-	rm -rf $(BENCHMARK_PROGRAM) *.o *.gcda *.gcno *.gcov
+	rm -rf $(BENCHMARK_PROGRAM) $(TEST_PROGRAM) *.o *.gcda *.gcno *.gcov
 
 dep:
 	$(CC) -MM *.c

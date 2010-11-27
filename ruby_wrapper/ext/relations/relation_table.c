@@ -3,6 +3,7 @@
 static ID id_limit;
 static ID id_select;
 static ID id_where;
+static ID id_order;
 
 static void relation_table_free(void *pointer) {
 	free(pointer);
@@ -46,6 +47,10 @@ VALUE relation_table_where_wrapper(VALUE self, VALUE conditions) {
 	return rb_funcall(relation_table_from_wrapper(self), id_where, 1, conditions);
 }
 
+VALUE relation_table_order_wrapper(VALUE self, VALUE expression) { 
+	return rb_funcall(relation_table_from_wrapper(self), id_order, 1, expression);
+}
+
 void Init_relation_table() {
 	class_Table = rb_define_class_under(module_Relation, "Table", rb_cObject);
 
@@ -58,9 +63,11 @@ void Init_relation_table() {
 	rb_define_method(class_Table, "select", relation_table_select_wrapper, 1);
 	rb_define_method(class_Table, "limit", relation_table_limit_wrapper, 1);
 	rb_define_method(class_Table, "where", relation_table_where_wrapper, 1);
+	rb_define_method(class_Table, "order", relation_table_order_wrapper, 1);
 
 	/* Name Methods to call */
 	id_select = rb_intern("select");
-	id_limit = rb_intern("limit");
-	id_where = rb_intern("where");
+	id_limit  = rb_intern("limit");
+	id_where  = rb_intern("where");
+	id_order  = rb_intern("order");
 }
