@@ -27,6 +27,9 @@ Relation is is a Relational Algebra made in C language.
      users.select('name').where("name = 'tomas'").to_sql
      => "SELECT name FROM users WHERE name = 'tomas'"
 
+     users.select('login').where("login = 'tomas'").order("login").to_sql
+     => "SELECT login FROM users WHERE login = 'tomas' ORDER BY login"
+
 ## Benchmarks
 
 ### Benchmarks Ruby Wrapper
