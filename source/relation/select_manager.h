@@ -15,4 +15,6 @@ SelectManager *select_manager_order(SelectManager *select_manager, char *express
 
 SelectManager *select_manager_offset(SelectManager *select_manager, int offset_number);
 
+SelectManager *select_manager_group(SelectManager *select_manager, SqlLiteral expression);
+
 #endif

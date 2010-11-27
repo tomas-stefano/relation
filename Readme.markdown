@@ -46,3 +46,7 @@ Some <b>LITTLE</b> benchmarking about the actual results:
 Just type in the root folder:
 
    rake test
+
+### Pull Request
+
+- Don't forget about testing! =-)

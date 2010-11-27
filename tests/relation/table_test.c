@@ -92,6 +92,11 @@ static void offset_should_add_the_offset_clause() {
 	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers OFFSET 100");
 }
 
+static void group_should_create_a_group() {
+	SelectManager *manager = relation_table_group(developers, "id");
+	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers GROUP BY id");
+}
+
 TestSuite *relation_table_suite() {
 	TestSuite *suite = create_test_suite();
 	
@@ -124,6 +129,9 @@ TestSuite *relation_table_suite() {
 
 	/* describe #offset */
 	add_test(suite, offset_should_add_the_offset_clause);
+	
+	/* describe #group */
+	add_test(suite, group_should_create_a_group);
 	
 	return suite;
 }

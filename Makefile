@@ -24,9 +24,10 @@ all: relation-test relation-benchmark
 # Deps (use make dep to generate this)
 
 relation-test:
+	$(CC) -o $(TEST_PROGRAM) $(CCOPT) $(DEBUG) $(TESTOBJ)
 
 relation-benchmark: $(BENCHOBJ)
-	$(CC) $(HEAPCHECKER) $(CPUPROFILE) -o $(BENCHMARK_PROGRAM) $(CCOPT) $(DEBUG) $(BENCHOBJ)
+	$(CC) -o $(BENCHMARK_PROGRAM) $(CCOPT) $(DEBUG) $(BENCHOBJ)
 
 clean:
 	rm -rf $(BENCHMARK_PROGRAM) $(TEST_PROGRAM) *.o *.gcda *.gcno *.gcov

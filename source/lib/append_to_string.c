@@ -4,6 +4,7 @@
 
 char *append_to_string(char *destination, char *append_string) {
 	destination = realloc(destination, strlen(destination) + strlen(append_string) + 1);
+	if(destination == NULL) exit(1);
 	strcat(destination, append_string);
 	return destination;
 }

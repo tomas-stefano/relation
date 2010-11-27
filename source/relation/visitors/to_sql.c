@@ -63,11 +63,18 @@ char *visit_relation_offset(int offset_number, char *query) {
 	return query;
 }
 
+char *visit_relation_group(SelectStatement ast, char *query) {
+	query = append_to_string(query, " GROUP BY ");
+	query = append_to_string(query, ast.group);
+	return query;
+}
+
 char *visit_nodes_select_core(SelectStatement ast) {
 	char *query = _assign_select_string();
 	if(ast.projections != NULL)	query = visit_syntax_tree_projections(ast, query);
 	query = visit_relation_table(ast.froms, query);
 	if(ast.wheres != NULL) query = visit_relation_where(ast, query);
+	if(ast.group != NULL) query = visit_relation_group(ast, query);
 	if(ast.orders != NULL) query = visit_relation_order(ast, query);
 	if(ast.limit > 0) query = visit_relation_limit(ast.limit, query);
 	if(ast.offset > 0) query = visit_relation_offset(ast.offset, query);

@@ -18,6 +18,7 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 	select_manager->abstract_syntax_tree.wheres = NULL;	
 	select_manager->abstract_syntax_tree.wheres_tail = NULL;	
 	select_manager->abstract_syntax_tree.orders = NULL;
+	select_manager->abstract_syntax_tree.group = NULL;
 	return select_manager;
 }
 
@@ -71,5 +72,10 @@ SelectManager *select_manager_order(SelectManager *select_manager, char *express
 
 SelectManager *select_manager_offset(SelectManager *select_manager, int offset_number) {
 	select_manager->abstract_syntax_tree.offset = offset_number;
+	return select_manager;
+}
+
+SelectManager *select_manager_group(SelectManager *select_manager, SqlLiteral expression) {
+	select_manager->abstract_syntax_tree.group = expression;
 	return select_manager;
 }

@@ -23,6 +23,7 @@ typedef struct statement {
 	SqlLiteral orders;					/* ORDER BY */
 	int offset;							/* OFFSET */
 	int limit;                          /* Limit */
+	SqlLiteral group;
 } SelectStatement;
 	
 typedef struct manager_select {
