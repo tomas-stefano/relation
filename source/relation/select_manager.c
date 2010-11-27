@@ -12,6 +12,7 @@ SelectManager *new_select_manager() {
 SelectManager *select_manager_instance_table(SelectManager *select_manager, RelationTable *table) {
 	select_manager->abstract_syntax_tree.froms = table;
 	select_manager->abstract_syntax_tree.limit = 0;
+	select_manager->abstract_syntax_tree.offset = 0;
 	select_manager->abstract_syntax_tree.projections = NULL;
 	select_manager->abstract_syntax_tree.projections_tail = NULL;
 	select_manager->abstract_syntax_tree.wheres = NULL;	
@@ -65,5 +66,10 @@ SelectManager *select_manager_where(SelectManager *select_manager, SqlLiteral ex
 
 SelectManager *select_manager_order(SelectManager *select_manager, char *expression) {
 	select_manager->abstract_syntax_tree.orders = expression;
+	return select_manager;
+}
+
+SelectManager *select_manager_offset(SelectManager *select_manager, int offset_number) {
+	select_manager->abstract_syntax_tree.offset = offset_number;
 	return select_manager;
 }

@@ -3,13 +3,15 @@
 
 char *visit_relation_table(RelationTable *table, char *query);
 
-char *visit_select_statements(SelectStatement abstract_syntax_tree);
+char *visit_nodes_select_core(SelectStatement abstract_syntax_tree);
 
 char *visit_syntax_tree_projections(SelectStatement ast, char *query);
 
 char *visit_relation_where(SelectStatement ast, char *query);
 
 char *visit_relation_order(SelectStatement ast, char *query);
+
+char *visit_relation_offset(int offset_number, char *query);
 
 char *to_sql_visit(SelectStatement abstract_syntax_tree);
 

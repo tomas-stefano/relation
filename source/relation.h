@@ -21,6 +21,7 @@ typedef struct statement {
 	ArraySqlLiterals *wheres;           /* Nodes(Linked Lists) of SqlLiterals */
 	ArraySqlLiterals *wheres_tail;      /* Pointer to tail of wheres */
 	SqlLiteral orders;					/* ORDER BY */
+	int offset;							/* OFFSET */
 	int limit;                          /* Limit */
 } SelectStatement;
 	

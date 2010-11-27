@@ -39,3 +39,7 @@ SelectManager *relation_table_where(RelationTable *table, char *expression) {
 SelectManager *relation_table_order(RelationTable *table, char *expression) {
 	return select_manager_order(relation_table_from(table), expression);
 }
+
+SelectManager *relation_table_offset(RelationTable *table, int offset_number) {
+	return select_manager_offset(relation_table_from(table), offset_number);
+}

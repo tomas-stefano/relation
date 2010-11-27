@@ -66,6 +66,12 @@ module Relation
       end
     end
     
+    describe '#offset' do
+      it "should add a offset" do
+        developers.offset(100).to_sql.should == "SELECT FROM developers OFFSET 100"
+      end
+    end
+    
     describe 'putting_all_together' do
       it "should pass limit before select" do
         users.limit(10).select('name').to_sql.should == "SELECT name FROM users LIMIT 10"

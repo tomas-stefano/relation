@@ -30,6 +30,9 @@ Relation is is a Relational Algebra made in C language.
      users.select('login').where("login = 'tomas'").order("login").to_sql
      => "SELECT login FROM users WHERE login = 'tomas' ORDER BY login"
 
+     users.select('login').where("login = 'tomas'").offset(100).to_sql
+     => "SELECT login FROM users WHERE login = 'tomas' OFFSET 100"
+
 ## Benchmarks
 
 ### Benchmarks Ruby Wrapper

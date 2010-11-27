@@ -13,4 +13,6 @@ SelectManager *select_manager_where(SelectManager *select_manager, char *express
 
 SelectManager *select_manager_order(SelectManager *select_manager, char *expression);
 
+SelectManager *select_manager_offset(SelectManager *select_manager, int offset_number);
+
 #endif

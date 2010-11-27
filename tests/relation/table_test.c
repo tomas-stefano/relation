@@ -87,6 +87,11 @@ static void order_should_add_the_order_clause() {
 	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers ORDER BY name");
 }
 
+static void offset_should_add_the_offset_clause() {
+	SelectManager *manager = relation_table_offset(developers, 100);
+	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers OFFSET 100");
+}
+
 TestSuite *relation_table_suite() {
 	TestSuite *suite = create_test_suite();
 	
@@ -116,6 +121,9 @@ TestSuite *relation_table_suite() {
 	
 	/* describe #order */
 	add_test(suite, order_should_add_the_order_clause);
+
+	/* describe #offset */
+	add_test(suite, offset_should_add_the_offset_clause);
 	
 	return suite;
 }

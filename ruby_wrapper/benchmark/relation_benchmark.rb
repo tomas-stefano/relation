@@ -35,31 +35,5 @@ Benchmark.benchmark do |x|
       simple_query!
     end
   end
-  x.report("10.000 Queries    ") do
-    10_000.times do
-      with_order_and_where!
-    end
-  end
-  x.report("100.000 Queries   ") do
-    100_000.times do
-      with_order_and_where!
-    end
-  end
-  x.report("1.000.000 Queries ") do
-    1_000_000.times do
-      with_order_and_where!
-    end
-  end
-  # x.report("1.000.000 Queries ") do
-  #   1_000_000.times do
-  #     with_where!
-  #   end
-  # end
-  
-  # x.report('10.000.000 Queries') do
-  #   10_000_000.times do
-  #     @table.select('*').limit(1).to_sql
-  #   end
-  # end
 end
 
