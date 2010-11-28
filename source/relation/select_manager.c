@@ -19,7 +19,8 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 	select_manager->abstract_syntax_tree.wheres_tail = NULL;	
 	select_manager->abstract_syntax_tree.orders = NULL;
 	select_manager->abstract_syntax_tree.groups = NULL;
-	select_manager->abstract_syntax_tree.groups_tail = NULL;	
+	select_manager->abstract_syntax_tree.groups_tail = NULL;
+	select_manager->abstract_syntax_tree.having = NULL;	
 	return select_manager;
 }
 
@@ -90,5 +91,10 @@ SelectManager *select_manager_group(SelectManager *select_manager, SqlLiteral ex
 		
 	select_manager->abstract_syntax_tree.groups_tail = literal;
 
+	return select_manager;
+}
+
+SelectManager *select_manager_having(SelectManager *select_manager, SqlLiteral expression) {
+	select_manager->abstract_syntax_tree.having = expression;
 	return select_manager;
 }

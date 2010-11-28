@@ -17,4 +17,6 @@ SelectManager *select_manager_offset(SelectManager *select_manager, int offset_n
 
 SelectManager *select_manager_group(SelectManager *select_manager, SqlLiteral expression);
 
+SelectManager *select_manager_having(SelectManager *select_manager, SqlLiteral expression);
+
 #endif

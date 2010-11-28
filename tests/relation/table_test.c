@@ -103,6 +103,11 @@ static void group_should_add_many_fields_to_group() {
 	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers GROUP BY name,language");
 }
 
+static void having_should_create_a_hvaing_clause() {
+	SelectManager *manager = relation_table_having(developers, "id = 20");
+	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers HAVING id = 20");
+}
+
 TestSuite *relation_table_suite() {
 	TestSuite *suite = create_test_suite();
 	
@@ -139,6 +144,9 @@ TestSuite *relation_table_suite() {
 	/* describe #group */
 	add_test(suite, group_should_create_a_group);
 	add_test(suite, group_should_add_many_fields_to_group);
+	
+	/* describe #having */
+	add_test(suite, having_should_create_a_hvaing_clause);
 	
 	return suite;
 }

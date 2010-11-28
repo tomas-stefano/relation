@@ -47,3 +47,7 @@ SelectManager *relation_table_offset(RelationTable *table, int offset_number) {
 SelectManager *relation_table_group(RelationTable *table, SqlLiteral expression) {
 	return select_manager_group(relation_table_from(table), expression);
 }
+
+SelectManager *relation_table_having(RelationTable *table, SqlLiteral expression) {
+	return select_manager_having(relation_table_from(table), expression);
+}

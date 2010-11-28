@@ -81,6 +81,12 @@ module Relation
       end
     end
 
+    describe '#having' do
+      it "should add a having clause" do
+        users.having('age > 10').to_sql.should == "SELECT FROM users HAVING age > 10"
+      end
+    end
+
     describe 'putting_all_together' do
       it "should pass limit before select" do
         users.limit(10).select('name').to_sql.should == "SELECT name FROM users LIMIT 10"

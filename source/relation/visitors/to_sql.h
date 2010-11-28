@@ -15,6 +15,8 @@ char *visit_relation_offset(int offset_number, char *query);
 
 char *visit_relation_group(SelectStatement ast, char *query);
 
+char *visit_relation_having(SelectStatement ast, char *query);
+
 char *to_sql_visit(SelectStatement abstract_syntax_tree);
 
 char *_assign_select_string();

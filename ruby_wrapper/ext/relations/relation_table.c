@@ -6,6 +6,7 @@ static ID id_where;
 static ID id_order;
 static ID id_offset;
 static ID id_group;
+static ID id_having;
 
 static void relation_table_free(void *pointer) {
 	free(pointer);
@@ -61,6 +62,10 @@ VALUE relation_table_group_wrapper(VALUE self, VALUE expression) {
 	return rb_funcall(relation_table_from_wrapper(self), id_group, 1, expression);
 }
 
+VALUE relation_table_having_wrapper(VALUE self, VALUE expression) {
+	return rb_funcall(relation_table_from_wrapper(self), id_having, 1, expression);
+}
+
 void Init_relation_table() {
 	class_Table = rb_define_class_under(module_Relation, "Table", rb_cObject);
 
@@ -76,6 +81,7 @@ void Init_relation_table() {
 	rb_define_method(class_Table, "order", relation_table_order_wrapper, 1);
 	rb_define_method(class_Table, "offset", relation_table_offset_wrapper, 1);
 	rb_define_method(class_Table, "group", relation_table_group_wrapper, 1);
+	rb_define_method(class_Table, "having", relation_table_having_wrapper, 1);
 	
 	/* Name Methods to call */
 	id_select = rb_intern("select");
@@ -84,4 +90,5 @@ void Init_relation_table() {
 	id_order  = rb_intern("order");
 	id_offset = rb_intern("offset");
 	id_group  = rb_intern("group");
+	id_having = rb_intern("having");
 }

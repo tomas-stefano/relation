@@ -25,6 +25,7 @@ typedef struct statement {
 	int limit;                          /* Limit */
 	ArraySqlLiterals *groups;           /* GROUP BY */
 	ArraySqlLiterals *groups_tail;      /* GROUP BY */	
+	SqlLiteral having;
 } SelectStatement;
 	
 typedef struct manager_select {
