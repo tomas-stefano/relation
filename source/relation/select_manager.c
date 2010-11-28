@@ -18,7 +18,8 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 	select_manager->abstract_syntax_tree.wheres = NULL;	
 	select_manager->abstract_syntax_tree.wheres_tail = NULL;	
 	select_manager->abstract_syntax_tree.orders = NULL;
-	select_manager->abstract_syntax_tree.group = NULL;
+	select_manager->abstract_syntax_tree.groups = NULL;
+	select_manager->abstract_syntax_tree.groups_tail = NULL;	
 	return select_manager;
 }
 
@@ -76,6 +77,18 @@ SelectManager *select_manager_offset(SelectManager *select_manager, int offset_n
 }
 
 SelectManager *select_manager_group(SelectManager *select_manager, SqlLiteral expression) {
-	select_manager->abstract_syntax_tree.group = expression;
+	ArraySqlLiterals *literal;
+	literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // TODO: Verify malloc
+	
+	literal->sql_literal = expression;
+	literal->next = NULL;
+	
+	if(select_manager->abstract_syntax_tree.groups == NULL)
+		select_manager->abstract_syntax_tree.groups = literal;
+	else 
+		select_manager->abstract_syntax_tree.groups_tail->next = literal;
+		
+	select_manager->abstract_syntax_tree.groups_tail = literal;
+
 	return select_manager;
 }

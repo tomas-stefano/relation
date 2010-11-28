@@ -60,6 +60,13 @@ VALUE relation_select_manager_offset_wrapper(VALUE self, VALUE offset_number) {
 	return self;
 }
 
+VALUE relation_select_manager_group_wrapper(VALUE self, VALUE group) {
+	SelectManager *select_manager;
+	Data_Get_Struct(self, SelectManager, select_manager);
+	select_manager_group(select_manager, StringValuePtr(group));
+	return self;
+}
+
 void Init_relation_select_manager() {
 	class_SelectManager = rb_define_class_under(module_Relation, "SelectManager", class_TreeManager);
 	
@@ -73,4 +80,5 @@ void Init_relation_select_manager() {
 	rb_define_method(class_SelectManager, "where", relation_select_manager_where_wrapper, 1);
 	rb_define_method(class_SelectManager, "order", relation_select_manager_order_wrapper, 1);
 	rb_define_method(class_SelectManager, "offset", relation_select_manager_offset_wrapper, 1);
+	rb_define_method(class_SelectManager, "group", relation_select_manager_group_wrapper, 1);
 }

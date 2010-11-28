@@ -27,11 +27,14 @@ Relation is is a Relational Algebra made in C language.
      users.select('name').where("name = 'tomas'").to_sql
      => "SELECT name FROM users WHERE name = 'tomas'"
 
-     users.select('login').where("login = 'tomas'").order("login").to_sql
-     => "SELECT login FROM users WHERE login = 'tomas' ORDER BY login"
+     users.select('name').where("name = 'tomas'").group('name').to_sql
+     => "SELECT name FROM users WHERE name = 'tomas' GROUP BY name"
 
-     users.select('login').where("login = 'tomas'").offset(100).to_sql
-     => "SELECT login FROM users WHERE login = 'tomas' OFFSET 100"
+     users.select('login').where("login = 'tomas'").group('name').order("login").to_sql
+     => "SELECT login FROM users WHERE login = 'tomas' GROUP BY name ORDER BY login"
+
+     users.select('login').where("login = 'tomas'").group('name').order("login").offset(100).to_sql
+     => "SELECT login FROM users WHERE login = 'tomas' GROUP BY name ORDER BY login OFFSET 100"
 
 ## Benchmarks
 

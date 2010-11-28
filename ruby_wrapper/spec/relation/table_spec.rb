@@ -71,7 +71,16 @@ module Relation
         developers.offset(100).to_sql.should == "SELECT FROM developers OFFSET 100"
       end
     end
-    
+
+    describe '#group' do
+      it "should create a group" do
+        developers.select('name').group('name').to_sql.should == "SELECT name FROM developers GROUP BY name"
+      end
+      it "should pass many groups" do
+        users.group('name').group('email').to_sql.should == "SELECT FROM users GROUP BY name,email"
+      end
+    end
+
     describe 'putting_all_together' do
       it "should pass limit before select" do
         users.limit(10).select('name').to_sql.should == "SELECT name FROM users LIMIT 10"

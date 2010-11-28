@@ -97,6 +97,12 @@ static void group_should_create_a_group() {
 	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers GROUP BY id");
 }
 
+static void group_should_add_many_fields_to_group() {
+	SelectManager *manager = relation_table_group(developers, "name");
+	select_manager_group(manager, "language");
+	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers GROUP BY name,language");
+}
+
 TestSuite *relation_table_suite() {
 	TestSuite *suite = create_test_suite();
 	
@@ -132,6 +138,7 @@ TestSuite *relation_table_suite() {
 	
 	/* describe #group */
 	add_test(suite, group_should_create_a_group);
+	add_test(suite, group_should_add_many_fields_to_group);
 	
 	return suite;
 }
