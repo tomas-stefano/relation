@@ -5,7 +5,7 @@
 
 Relation is is a Relational Algebra made in C language.
 
-### Based on Arel, Sequel and DataMapper.
+## Based on Arel, Sequel and DataMapper.
 
 ## Why I'm creating this library:
 
@@ -16,28 +16,46 @@ Relation is is a Relational Algebra made in C language.
 
 ### Ruby Wrapper
 
+In order to create:
+
+   SELECT * FROM users
+
+you create a Table object:
+
      users = Relation::Table('users')
      
      users.select('*').to_sql
      => "SELECT * FROM users"
-     
-     users.select('*').limit(10).to_sql
-     => "SELECT * FROM users LIMIT 10"
+
+#### A little more complexity
+
+Using where operator:
 
      users.select('name').where("name = 'tomas'").to_sql
      => "SELECT name FROM users WHERE name = 'tomas'"
 
-     users.select('name').where("name = 'tomas'").group('name').to_sql
-     => "SELECT name FROM users WHERE name = 'tomas' GROUP BY name"
+Using `LIMIT` or `OFFSET`:
 
-     users.select('name').where("name = 'tomas'").group('name').having('age = 21').to_sql
-     => "SELECT name FROM users WHERE name = 'tomas' GROUP BY name HAVING age = 21"
+     users.select('*').limit(10).to_sql
+     => "SELECT * FROM users LIMIT 10"
 
-     users.select('login').where("login = 'tomas'").group('name').having('age = 21').order("login").to_sql
-     => "SELECT login FROM users WHERE login = 'tomas' GROUP BY name HAVING age = 21 ORDER BY login"
+     users.select('*').offset(10).to_sql
+     => "SELECT * FROM users OFFSET 10"
 
-     users.select('login').where("login = 'tomas'").group('name').order("login").offset(100).to_sql
-     => "SELECT login FROM users WHERE login = 'tomas' GROUP BY name ORDER BY login OFFSET 100"
+Using `ORDER BY` as `#order`:
+
+     users.select('*').order('name')
+     => "SELECT * FROM users ORDER BY name"
+
+Using `GROUP BY` as `#group` (like Arel):
+
+	users.select('*').group('name')
+	=> "SELECT * FROM users GROUP BY name"
+
+Using `HAVING` as `#having`:
+
+     users.select('name').group('name').having('age = 21').to_sql
+     => "SELECT name FROM users GROUP BY name HAVING age = 21"
 
 ## Benchmarks
 
