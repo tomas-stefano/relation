@@ -18,7 +18,7 @@ Relation is is a Relational Algebra made in C language.
 
 In order to create:
 
-   SELECT * FROM users
+    SELECT * FROM users
 
 you create a Table object:
 
