@@ -9,6 +9,14 @@ SelectManager *new_select_manager() {
 	return select_manager;
 }
 
+ArraySqlLiterals *select_manager_new_literal(SqlLiteral expression) {
+	ArraySqlLiterals *array_sql_literal;
+	array_sql_literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // TODO: Verify malloc
+	array_sql_literal->sql_literal = expression;
+	array_sql_literal->next = NULL;
+	return array_sql_literal;
+}
+
 SelectManager *select_manager_instance_table(SelectManager *select_manager, RelationTable *table) {
 	select_manager->abstract_syntax_tree.froms = table;
 	select_manager->abstract_syntax_tree.limit = 0;
@@ -28,12 +36,7 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 *
 */
 SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral sql_literal) {
-	ArraySqlLiterals *projection;
-	
-	// TODO: Verify malloc	
-	projection = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // +1 because the '\0' (I think =\ )	
-	projection->sql_literal = sql_literal;
-	projection->next = NULL;
+	ArraySqlLiterals *projection = select_manager_new_literal(sql_literal);
 	
 	if(select_manager->abstract_syntax_tree.projections == NULL)
 		select_manager->abstract_syntax_tree.projections = projection;
@@ -51,11 +54,7 @@ SelectManager *select_manager_limit(SelectManager *select_manager, int limit_num
 }
 
 SelectManager *select_manager_where(SelectManager *select_manager, SqlLiteral expression) {
-	ArraySqlLiterals *literal;
-	literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // TODO: Verify malloc
-	
-	literal->sql_literal = expression;
-	literal->next = NULL;
+	ArraySqlLiterals *literal = select_manager_new_literal(expression);
 	
 	if(select_manager->abstract_syntax_tree.wheres == NULL)
 		select_manager->abstract_syntax_tree.wheres = literal;
@@ -78,11 +77,7 @@ SelectManager *select_manager_offset(SelectManager *select_manager, int offset_n
 }
 
 SelectManager *select_manager_group(SelectManager *select_manager, SqlLiteral expression) {
-	ArraySqlLiterals *literal;
-	literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // TODO: Verify malloc
-	
-	literal->sql_literal = expression;
-	literal->next = NULL;
+	ArraySqlLiterals *literal = select_manager_new_literal(expression);
 	
 	if(select_manager->abstract_syntax_tree.groups == NULL)
 		select_manager->abstract_syntax_tree.groups = literal;

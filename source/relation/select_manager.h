@@ -5,6 +5,8 @@ SelectManager *new_select_manager();
 
 SelectManager *select_manager_instance_table(SelectManager *select_manager, RelationTable *table);
 
+ArraySqlLiterals *select_manager_new_literal(SqlLiteral expression);
+
 SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral literal);
 
 SelectManager *select_manager_limit(SelectManager *select_manager, int limit_number);
