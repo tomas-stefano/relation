@@ -2,6 +2,8 @@
 #include <string.h>
 #include "relation.h"
 #include "relation/select_manager.h"
+#include "relation/table.h"
+#include "relation/sql_literal.h"
 
 SelectManager *new_select_manager() {
 	// TODO: Verify Malloc
@@ -32,19 +34,13 @@ SelectManager *select_manager_instance_table(SelectManager *select_manager, Rela
 	return select_manager;
 }
 
-/*
-*
-*/
-SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral sql_literal) {
-	ArraySqlLiterals *projection = select_manager_new_literal(sql_literal);
-	
-	if(select_manager->abstract_syntax_tree.projections == NULL)
-		select_manager->abstract_syntax_tree.projections = projection;
-	else 
-		select_manager->abstract_syntax_tree.projections_tail->next = projection;
-		
-	select_manager->abstract_syntax_tree.projections_tail = projection;
-	
+SelectManager *select_manager_order(SelectManager *select_manager, char *expression) {
+	select_manager->abstract_syntax_tree.orders = expression;
+	return select_manager;
+}
+
+SelectManager *select_manager_offset(SelectManager *select_manager, int offset_number) {
+	select_manager->abstract_syntax_tree.offset = offset_number;
 	return select_manager;
 }
 
@@ -53,6 +49,25 @@ SelectManager *select_manager_limit(SelectManager *select_manager, int limit_num
 	return select_manager;
 }
 
+/*
+* FIXME: Removing Duplication
+*/
+SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral sql_literal) {
+	ArraySqlLiterals *literal = select_manager_new_literal(sql_literal);
+	
+	if(select_manager->abstract_syntax_tree.projections == NULL)
+		select_manager->abstract_syntax_tree.projections = literal;
+	else 
+		select_manager->abstract_syntax_tree.projections_tail->next = literal;
+		
+	select_manager->abstract_syntax_tree.projections_tail = literal;
+	
+	return select_manager;
+}
+
+/*
+* * FIXME: Removing Duplication
+*/
 SelectManager *select_manager_where(SelectManager *select_manager, SqlLiteral expression) {
 	ArraySqlLiterals *literal = select_manager_new_literal(expression);
 	
@@ -66,16 +81,9 @@ SelectManager *select_manager_where(SelectManager *select_manager, SqlLiteral ex
 	return select_manager;
 }
 
-SelectManager *select_manager_order(SelectManager *select_manager, char *expression) {
-	select_manager->abstract_syntax_tree.orders = expression;
-	return select_manager;
-}
-
-SelectManager *select_manager_offset(SelectManager *select_manager, int offset_number) {
-	select_manager->abstract_syntax_tree.offset = offset_number;
-	return select_manager;
-}
-
+/*
+* FIXME: Removing Duplication
+*/
 SelectManager *select_manager_group(SelectManager *select_manager, SqlLiteral expression) {
 	ArraySqlLiterals *literal = select_manager_new_literal(expression);
 	

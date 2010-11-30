@@ -14,25 +14,27 @@
 char *visit_syntax_tree_projections(SelectStatement ast, char *query) {
 	for(; ast.projections != NULL; ast.projections = ast.projections->next) {
 		query = append_to_string(query, ast.projections->sql_literal);
-		if(ast.projections->next != NULL) query = append_to_string(query, ",");
+		if(ast.projections->next != NULL) query = append_to_string_with_size(query, ",", 1);
 	}
-	query = append_to_string(query, " ");
+	query = append_to_string_with_size(query, " ", 1);
+	// free(ast.projections);
 	return query;
 }
 
 char *visit_relation_table(RelationTable *table, char *query) {
-	query = append_to_string(query, FROM);
+	query = append_to_string_with_size(query, FROM, 5);
 	query = append_to_string(query, table->name);	
 	return query;
 }
 
 char *visit_relation_where(SelectStatement ast, char *query) {
-	query = append_to_string(query, " ");
-	query = append_to_string(query, WHERE);
+	query = append_to_string_with_size(query, " ", 1);
+	query = append_to_string_with_size(query, WHERE, 6);
 	for(; ast.wheres != NULL; ast.wheres = ast.wheres->next) {		
 		query = append_to_string(query, ast.wheres->sql_literal);		
-		if(ast.wheres->next != NULL) query = append_to_string(query, " AND ");
+		if(ast.wheres->next != NULL) query = append_to_string_with_size(query, " AND ", 5);
 	}
+	// free(ast.wheres);
 	return query;
 }
 
@@ -40,41 +42,44 @@ char *visit_relation_limit(int limit_size, char *query) {
 	char *limit;
 	limit = (char *) malloc(sizeof(char *));
 	integer_to_char(limit_size, limit, 10); // TODO Verify malloc
-	query = append_to_string(query, " LIMIT ");
+	query = append_to_string_with_size(query, " LIMIT ", 7);
 	query = append_to_string(query, limit);
-	free(limit);
+	// free(limit);
 	return query;
 }
 
 char *visit_relation_order(SelectStatement ast, char *query) {
-	query = append_to_string(query, " ");
-	query = append_to_string(query, ORDER);
+	query = append_to_string_with_size(query, " ", 1);
+	query = append_to_string_with_size(query, ORDER, 9);
 	query = append_to_string(query, ast.orders);
+	// free(ast.orders);
 	return query;
 }
 
 char *visit_relation_offset(int offset_number, char *query) {
-	query = append_to_string(query, " OFFSET ");
+	query = append_to_string_with_size(query, " OFFSET ", 8);
 	char *offset;
 	offset = (char *) malloc(sizeof(char *)); // TODO Verify malloc
 	integer_to_char(offset_number, offset, 10);
 	query = append_to_string(query, offset);
-	free(offset);
+	// free(offset);
 	return query;
 }
 
 char *visit_relation_group(SelectStatement ast, char *query) {
-	query = append_to_string(query, " GROUP BY ");
+	query = append_to_string_with_size(query, " GROUP BY ", 10);
 	for(; ast.groups != NULL; ast.groups = ast.groups->next) {		
 		query = append_to_string(query, ast.groups->sql_literal);		
 		if(ast.groups->next != NULL) query = append_to_string(query, ",");
 	}	
+	// free(groups);
 	return query;
 }
 
 char *visit_relation_having(SelectStatement ast, char *query) {
-	query = append_to_string(query, " HAVING ");
+	query = append_to_string_with_size(query, " HAVING ", 8);
 	query = append_to_string(query, ast.having);
+	// free(ast.having);
 	return query;
 }
 
@@ -97,7 +102,7 @@ char *to_sql_visit(SelectStatement syntax_tree) {
 
 char *_assign_select_string() {
 	char *query;
-	query = (char *) malloc(sizeof(SELECT_SIZE));
+	query = (char *) malloc(SELECT_SIZE);
 	memcpy(query, SELECT, SELECT_SIZE);	
 	return query;
 }

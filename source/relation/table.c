@@ -1,17 +1,19 @@
 
 #include <stdlib.h>
-
+#include <string.h>
+ 
 #include "relation.h"
 #include "select_manager.h"
 #include "table.h"
 
 RelationTable *new_relation_table() {
-	RelationTable *relation_table = (RelationTable *) malloc(sizeof(RelationTable));
+	RelationTable *relation_table = (RelationTable *) malloc(sizeof(RelationTable)); /* TODO: Verify malloc */
 	return relation_table;
 }
 
 RelationTable *table_instance_name(RelationTable *relation_table, char *table_name) {
 	relation_table->name = table_name;
+	relation_table->name_size = strlen(table_name);
 	return relation_table;
 }
 

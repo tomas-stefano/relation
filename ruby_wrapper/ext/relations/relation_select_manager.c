@@ -1,6 +1,6 @@
 #include "relation_select_manager.h"
 
-static void free_select_manager(void *pointer) {
+static void free_select_manager(SelectManager *pointer) {
 	free(pointer);
 }
 

@@ -29,10 +29,27 @@ static void should_concatenate_and_reallocate_a_bigger_string() {
 	assert_string_equal("aaaaaaaaaa", destination);
 }
 
+static void should_concatenate_a_new_string_with_size() {
+	char *destination = allocate_string();
+	assert_string_equal(append_to_string_with_size(destination, "abc", 3), "abc");
+}
+
+static void should_concatenate_a_exist_string_with_size() {
+	char *destination = allocate_string();
+	append_to_string(destination, "fuu");
+	assert_string_equal(append_to_string_with_size(destination, "bar", 3), "fuubar");
+}
+
 TestSuite *append_to_string_suite() {
 	TestSuite *suite = create_test_suite();
+	
+	/* describe #apend_to_string */
 	add_test(suite, should_concatenation_a_empty_string);
 	add_test(suite, should_concatenate_a_exist_string);
 	add_test(suite, should_concatenate_and_reallocate_a_bigger_string);
+	
+	/* describe #append_to_string_with_size */
+	add_test(suite, should_concatenate_a_new_string_with_size);
+	add_test(suite, should_concatenate_a_exist_string_with_size);
 	return suite;
 }

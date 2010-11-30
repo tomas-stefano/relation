@@ -5,6 +5,7 @@
 
 typedef struct relation_table {
 	char *name; /* Table name */
+	long long name_size;
 } RelationTable;
 
 typedef char *SqlLiteral; /* Alias for pointer to char */
@@ -22,7 +23,7 @@ typedef struct statement {
 	ArraySqlLiterals *wheres_tail;      /* Pointer to tail of wheres */
 	SqlLiteral orders;					/* ORDER BY */
 	int offset;							/* OFFSET */
-	int limit;                          /* Limit */
+	int limit;                          /* LIMIT */
 	ArraySqlLiterals *groups;           /* GROUP BY */
 	ArraySqlLiterals *groups_tail;      /* GROUP BY */	
 	SqlLiteral having;
