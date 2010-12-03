@@ -23,7 +23,7 @@ typedef struct statement {
 	ArraySqlLiterals *wheres_tail;      /* Pointer to tail of wheres */
 	SqlLiteral orders;					/* ORDER BY */
 	int offset;							/* OFFSET */
-	int limit;                          /* LIMIT */
+	long long limit;                          /* LIMIT */
 	ArraySqlLiterals *groups;           /* GROUP BY */
 	ArraySqlLiterals *groups_tail;      /* GROUP BY */	
 	SqlLiteral having;

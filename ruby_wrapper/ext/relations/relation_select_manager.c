@@ -35,7 +35,7 @@ VALUE relation_select_manager_select_wrapper(VALUE self, VALUE projections) {
 VALUE relation_select_manager_limit_wrapper(VALUE self, VALUE limit) {
 	SelectManager *select_manager;
 	Data_Get_Struct(self, SelectManager, select_manager);
-	select_manager_limit(select_manager, FIX2INT(limit));
+	select_manager_limit(select_manager, FIX2LONG(limit));
 	return self;
 }
 

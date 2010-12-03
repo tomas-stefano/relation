@@ -38,7 +38,7 @@ char *visit_relation_where(SelectStatement ast, char *query) {
 	return query;
 }
 
-char *visit_relation_limit(int limit_size, char *query) {
+char *visit_relation_limit(long long limit_size, char *query) {
 	char *limit;
 	limit = (char *) malloc(sizeof(char *));
 	integer_to_char(limit_size, limit, 10); // TODO Verify malloc

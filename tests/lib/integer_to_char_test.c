@@ -30,7 +30,9 @@ static void should_convert_high_numbers_to_char() {
 	integer_to_char(10000000, character, 10);
 	assert_string_equal("10000000", character);	
 	integer_to_char(1000000000, character, 10);
-	assert_string_equal("1000000000", character);		
+	assert_string_equal("1000000000", character);
+	integer_to_char(10000000000, character, 10);
+	assert_string_equal("10000000000", character);
 }
 
 TestSuite *integer_to_char_suite() {

@@ -44,7 +44,7 @@ SelectManager *select_manager_offset(SelectManager *select_manager, int offset_n
 	return select_manager;
 }
 
-SelectManager *select_manager_limit(SelectManager *select_manager, int limit_number) {
+SelectManager *select_manager_limit(SelectManager *select_manager, long long limit_number) {
 	select_manager->abstract_syntax_tree.limit = limit_number;
 	return select_manager;
 }

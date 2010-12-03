@@ -9,7 +9,7 @@ ArraySqlLiterals *select_manager_new_literal(SqlLiteral expression);
 
 SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral literal);
 
-SelectManager *select_manager_limit(SelectManager *select_manager, int limit_number);
+SelectManager *select_manager_limit(SelectManager *select_manager, long long limit_number);
 
 SelectManager *select_manager_where(SelectManager *select_manager, char *expression);
 

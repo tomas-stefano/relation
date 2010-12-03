@@ -7,11 +7,11 @@
 * with slight modification to optimize for specific architecture.
 *
 */	
-void integer_to_char(int value, char* str, int base) {
+void integer_to_char(long long value, char* str, int base) {
 	static char num[] = "0123456789abcdefghijklmnopqrstuvwxyz";
-	char* wstr=str;
+	char *wstr = str;
 	int sign;
-	div_t res;
+	lldiv_t res;
 	
 	// Validate base
 	if (base < 2 || base > 35) { 
@@ -20,19 +20,20 @@ void integer_to_char(int value, char* str, int base) {
 	}
 	
 	// Take care of sign
-	if ((sign=value) < 0) value = -value;
+	if ((sign = value) < 0) value = -value;
 
 	// Conversion. Number is reversed.
 	do {
-		res = div(value,base);
+		res = lldiv(value, base);
 		*wstr++ = num[res.rem];
 	} while((value = res.quot));
 	
-	if(sign<0) *wstr++='-';
+	if(sign < 0) *wstr ++='-';
 	
-	*wstr='\0';	
+	*wstr='\0';
+	
 	// Reverse string
-	reverse_string(str,wstr-1);	
+	reverse_string(str, wstr-1);	
 }
 
 /* 
