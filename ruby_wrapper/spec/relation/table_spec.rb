@@ -43,7 +43,6 @@ module Relation
       end
       
       it "should add a high limit number" do
-        pending
         users.limit(10_000_000_000).to_sql.should == "SELECT FROM users LIMIT 10000000000"
       end
       
