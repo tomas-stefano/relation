@@ -5,7 +5,7 @@ SelectManager *new_select_manager();
 
 SelectManager *select_manager_instance_table(SelectManager *select_manager, RelationTable *table);
 
-ArraySqlLiterals *select_manager_new_literal(SqlLiteral expression);
+ArraySqlLiterals *new_array_of_sql_literals(SqlLiteral expression);
 
 SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral literal);
 

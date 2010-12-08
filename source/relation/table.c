@@ -7,13 +7,22 @@
 #include "table.h"
 
 RelationTable *new_relation_table() {
-	RelationTable *relation_table = (RelationTable *) malloc(sizeof(RelationTable)); /* TODO: Verify malloc */
+	/* TODO: Verify malloc */
+	RelationTable *relation_table = (RelationTable *) malloc(sizeof(RelationTable)); 
+	/* */
+	relation_table->name = NULL;
+	relation_table->table_alias = NULL;
 	return relation_table;
 }
 
 RelationTable *table_instance_name(RelationTable *relation_table, char *table_name) {
 	relation_table->name = table_name;
 	relation_table->name_size = strlen(table_name);
+	return relation_table;
+}
+
+RelationTable *table_instance_alias(RelationTable *relation_table, SqlLiteral alias_name) {
+	relation_table->table_alias = alias_name;
 	return relation_table;
 }
 

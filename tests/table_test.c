@@ -112,6 +112,15 @@ static void having_should_create_a_hvaing_clause() {
 	assert_string_equal(relation_to_sql(manager), "SELECT FROM developers HAVING id = 20");
 }
 
+static void alias_should_be_empty_when_initialize_table() {
+	assert_equal(developers->table_alias, NULL);
+}
+
+static void alias_should_create_a_struct_that_proxies_a_table() {
+	table_instance_alias(developers, "developers_2");
+	assert_string_equal(developers->table_alias, "developers_2");
+}
+
 TestSuite *relation_table_suite() {
 	TestSuite *suite = create_test_suite();
 	
@@ -152,6 +161,10 @@ TestSuite *relation_table_suite() {
 	
 	/* describe #having */
 	add_test(suite, having_should_create_a_hvaing_clause);
+	
+	/* describe #aliases */
+	add_test(suite, alias_should_be_empty_when_initialize_table);
+	add_test(suite, alias_should_create_a_struct_that_proxies_a_table);
 	
 	return suite;
 }

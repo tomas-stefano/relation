@@ -76,24 +76,36 @@ VALUE relation_table_having_wrapper(VALUE self, VALUE expression) {
 	return rb_funcall(relation_table_from_wrapper(self), id_having, 1, expression);
 }
 
+int	is_the_table_has_an_alias(RelationTable *table) {
+	return table->table_alias != NULL;
+}
+
 static VALUE relation_table_aliases_wrapper(VALUE self) {
-	return rb_ary_new();
+	VALUE alias = rb_ary_new();
+	RelationTable *table;
+	Data_Get_Struct(self, RelationTable, table);
+	VALUE aliases;
+	aliases = rb_ary_new();
+	if(is_the_table_has_an_alias(table)) rb_ary_push(aliases, rb_str_new2(table->table_alias));
+	return aliases;
 }
 
 static VALUE relation_table_alias_wrapper(int argc, VALUE *argv, VALUE self) {
 	RelationTable *table;
 	Data_Get_Struct(self, RelationTable, table);
-	
-	VALUE name = rb_str_new2(table->name);
-	
+	VALUE name = relation_table_get_name(self);	
 	/* name = "#{table.name}_2" */
-	rb_str_append(name, rb_str_new2("_2"));
-	
-	// rb_scan_args(argc, argv, &name);
-	
-	// assign_an_alias_table(table, )
+	rb_str_append(name, rb_str_new2("_2"));	
+	table_instance_alias(table, StringValuePtr(name));	
 	return name;
 }
+
+static VALUE relation_table_alias_table_wrapper(VALUE self) {
+	RelationTable *table;
+	Data_Get_Struct(self, RelationTable, table);
+	return rb_str_new2(table->table_alias);
+}
+
 
 void Init_relation_table() {
 	class_Table = rb_define_class_under(module_Relation, "Table", rb_cObject);
@@ -113,6 +125,7 @@ void Init_relation_table() {
 	rb_define_method(class_Table, "having", relation_table_having_wrapper, 1);
 	rb_define_method(class_Table, "aliases", relation_table_aliases_wrapper, 0);
 	rb_define_method(class_Table, "alias", relation_table_alias_wrapper, -1);
+	rb_define_method(class_Table, "table_alias", relation_table_alias_table_wrapper, 0);
 	
 	/* Name Methods to call */
 	id_select = rb_intern("select");

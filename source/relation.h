@@ -3,17 +3,18 @@
 #define RELATION_H
 #define RelationVersion "0.1.0"
 
-typedef struct relation_table {
-	char *name; /* Table name */
-	long long name_size;
-} RelationTable;
-
 typedef char *SqlLiteral; /* Alias for pointer to char */
 
 typedef struct sql_literals {
 	SqlLiteral sql_literal;
 	struct sql_literals *next;
 } ArraySqlLiterals;
+
+typedef struct relation_table {
+	SqlLiteral name; /* Table name */
+	SqlLiteral table_alias;
+	long long name_size;
+} RelationTable;
 
 typedef struct statement {
 	ArraySqlLiterals *projections;      /* Nodes(Linked Lists) of SqlLiterals */

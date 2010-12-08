@@ -89,15 +89,22 @@ module Relation
     end
 
     describe '#alias' do
-      before { pending; @alias = developers.alias }
-      it 'should initialize with empty aliases' do
-        developers.aliases.should == []
-      end      
-      it 'should create an object that proxies a table' do
-        developers.aliases.should == [@alias]
+      context 'when dont have an alias' do
+        it 'should initialize with empty aliases' do
+          developers.aliases.should == []
+        end
       end
-      it 'should return an alias to the relation table' do
-        @alias.name.should == 'developers_2'
+      
+      context 'when have an alias' do
+        before do
+          @alias = users.alias
+        end
+        it 'should create an object that proxies a table' do
+          users.aliases.should == [@alias]
+        end
+        it 'should return an alias to the relation table' do
+          users.table_alias.should == 'users_2'
+        end
       end
     end
 

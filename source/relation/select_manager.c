@@ -11,9 +11,12 @@ SelectManager *new_select_manager() {
 	return select_manager;
 }
 
-ArraySqlLiterals *select_manager_new_literal(SqlLiteral expression) {
+ArraySqlLiterals *new_array_of_sql_literals(SqlLiteral expression) {
 	ArraySqlLiterals *array_sql_literal;
-	array_sql_literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); // TODO: Verify malloc
+	/*  TODO: Verify malloc */
+	array_sql_literal = (ArraySqlLiterals *) malloc(sizeof(ArraySqlLiterals)); 
+	/*  */
+	
 	array_sql_literal->sql_literal = expression;
 	array_sql_literal->next = NULL;
 	return array_sql_literal;
@@ -53,7 +56,7 @@ SelectManager *select_manager_limit(SelectManager *select_manager, long long lim
 * FIXME: Removing Duplication
 */
 SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral sql_literal) {
-	ArraySqlLiterals *literal = select_manager_new_literal(sql_literal);
+	ArraySqlLiterals *literal = new_array_of_sql_literals(sql_literal);
 	
 	if(select_manager->abstract_syntax_tree.projections == NULL)
 		select_manager->abstract_syntax_tree.projections = literal;
@@ -69,7 +72,7 @@ SelectManager *select_manager_project(SelectManager *select_manager, SqlLiteral 
 * * FIXME: Removing Duplication
 */
 SelectManager *select_manager_where(SelectManager *select_manager, SqlLiteral expression) {
-	ArraySqlLiterals *literal = select_manager_new_literal(expression);
+	ArraySqlLiterals *literal = new_array_of_sql_literals(expression);
 	
 	if(select_manager->abstract_syntax_tree.wheres == NULL)
 		select_manager->abstract_syntax_tree.wheres = literal;
@@ -85,7 +88,7 @@ SelectManager *select_manager_where(SelectManager *select_manager, SqlLiteral ex
 * FIXME: Removing Duplication
 */
 SelectManager *select_manager_group(SelectManager *select_manager, SqlLiteral expression) {
-	ArraySqlLiterals *literal = select_manager_new_literal(expression);
+	ArraySqlLiterals *literal = new_array_of_sql_literals(expression);
 	
 	if(select_manager->abstract_syntax_tree.groups == NULL)
 		select_manager->abstract_syntax_tree.groups = literal;
