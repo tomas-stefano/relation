@@ -45,4 +45,14 @@ task :test do
   end
 end
 
+desc "Run Console"
+task :console do
+  Rake::Task['compile'].invoke
+  require 'irb'
+  $LOAD_PATH.unshift('lib')
+  require 'relation'
+  ARGV.clear
+  IRB.start
+end
+
 task :default => :test

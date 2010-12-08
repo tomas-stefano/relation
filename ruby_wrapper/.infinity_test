@@ -5,7 +5,7 @@ infinity_test do
 
   after(:all) { system("rake clean_and_clobber_without_verbose") }
 
-  use :test_framework => :rspec, :rubies => %w(1.9.2)
+  use :test_framework => :rspec
 
   heuristics do
     add("^ext/*/(.*)\.c") do |file|

@@ -4,7 +4,7 @@ module Relation
   describe Table do
     
     let(:users) { Table.new('users') }
-    let(:developers) { Table.new('developers') }
+    let(:developers) { Table.new(:developers) }
     
     describe '#name' do
       
@@ -88,7 +88,20 @@ module Relation
       end
     end
 
-    describe 'putting_all_together' do
+    describe '#alias' do
+      before { pending; @alias = developers.alias }
+      it 'should initialize with empty aliases' do
+        developers.aliases.should == []
+      end      
+      it 'should create an object that proxies a table' do
+        developers.aliases.should == [@alias]
+      end
+      it 'should return an alias to the relation table' do
+        @alias.name.should == 'developers_2'
+      end
+    end
+
+    context 'putting all together' do
       it "should pass limit before select" do
         users.limit(10).select('name').to_sql.should == "SELECT name FROM users LIMIT 10"
       end

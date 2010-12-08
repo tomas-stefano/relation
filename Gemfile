@@ -8,6 +8,7 @@ gem 'rake-compiler'
 
 group :test do
   gem 'rspec'
+  gem 'infinity_test'
   gem 'fuubar'
 end
 

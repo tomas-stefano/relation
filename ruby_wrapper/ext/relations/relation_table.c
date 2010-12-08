@@ -7,6 +7,7 @@ static ID id_order;
 static ID id_offset;
 static ID id_group;
 static ID id_having;
+static ID id_to_s;
 
 static void relation_table_free(void *pointer) {
 	free(pointer);
@@ -22,14 +23,23 @@ static VALUE allocate_relation_table(VALUE klass) {
 VALUE relation_table_initialize(VALUE self, VALUE name) {
 	RelationTable *table;
 	Data_Get_Struct(self, RelationTable, table);
+	name = rb_funcall(name, id_to_s, 0);
 	table_instance_name(table, StringValuePtr(name));	
 	return self;
 }
 
+/*
+*/
 VALUE relation_table_get_name(VALUE self) {
-	RelationTable *table;
-	Data_Get_Struct(self, RelationTable, table);
-	return rb_str_new2(table->name);
+	VALUE name = rb_iv_get(self, "@name");
+	if(name == Qnil) {
+		RelationTable *table;
+		Data_Get_Struct(self, RelationTable, table);
+		return rb_iv_set(self, "@name", rb_str_new2(table->name));
+	}
+	else {
+		return name;
+	}
 }
 
 VALUE relation_table_from_wrapper(VALUE self) {
@@ -66,6 +76,25 @@ VALUE relation_table_having_wrapper(VALUE self, VALUE expression) {
 	return rb_funcall(relation_table_from_wrapper(self), id_having, 1, expression);
 }
 
+static VALUE relation_table_aliases_wrapper(VALUE self) {
+	return rb_ary_new();
+}
+
+static VALUE relation_table_alias_wrapper(int argc, VALUE *argv, VALUE self) {
+	RelationTable *table;
+	Data_Get_Struct(self, RelationTable, table);
+	
+	VALUE name = rb_str_new2(table->name);
+	
+	/* name = "#{table.name}_2" */
+	rb_str_append(name, rb_str_new2("_2"));
+	
+	// rb_scan_args(argc, argv, &name);
+	
+	// assign_an_alias_table(table, )
+	return name;
+}
+
 void Init_relation_table() {
 	class_Table = rb_define_class_under(module_Relation, "Table", rb_cObject);
 
@@ -82,6 +111,8 @@ void Init_relation_table() {
 	rb_define_method(class_Table, "offset", relation_table_offset_wrapper, 1);
 	rb_define_method(class_Table, "group", relation_table_group_wrapper, 1);
 	rb_define_method(class_Table, "having", relation_table_having_wrapper, 1);
+	rb_define_method(class_Table, "aliases", relation_table_aliases_wrapper, 0);
+	rb_define_method(class_Table, "alias", relation_table_alias_wrapper, -1);
 	
 	/* Name Methods to call */
 	id_select = rb_intern("select");
@@ -91,4 +122,5 @@ void Init_relation_table() {
 	id_offset = rb_intern("offset");
 	id_group  = rb_intern("group");
 	id_having = rb_intern("having");
+	id_to_s   = rb_intern("to_s");
 }
