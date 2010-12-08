@@ -20,7 +20,7 @@ static VALUE allocate_relation_table(VALUE klass) {
 	return object;
 }
 
-VALUE relation_table_initialize(VALUE self, VALUE name) {
+static VALUE relation_table_initialize(VALUE self, VALUE name) {
 	RelationTable *table;
 	Data_Get_Struct(self, RelationTable, table);
 	name = rb_funcall(name, id_to_s, 0);
@@ -30,7 +30,7 @@ VALUE relation_table_initialize(VALUE self, VALUE name) {
 
 /*
 */
-VALUE relation_table_get_name(VALUE self) {
+static VALUE relation_table_get_name(VALUE self) {
 	VALUE name = rb_iv_get(self, "@name");
 	if(name == Qnil) {
 		RelationTable *table;
@@ -42,37 +42,37 @@ VALUE relation_table_get_name(VALUE self) {
 	}
 }
 
-VALUE relation_table_from_wrapper(VALUE self) {
+static VALUE relation_table_from_wrapper(VALUE self) {
 	VALUE argv[1];
 	argv[0] = self;
 	return rb_class_new_instance(1, argv, class_SelectManager);
 }
 
-VALUE relation_table_limit_wrapper(VALUE self, VALUE limit) {
+static VALUE relation_table_limit_wrapper(VALUE self, VALUE limit) {
 	return rb_funcall(relation_table_from_wrapper(self), id_limit, 1, limit);
 }
 
-VALUE relation_table_select_wrapper(VALUE self, VALUE projections) {
+static VALUE relation_table_select_wrapper(VALUE self, VALUE projections) {
 	return rb_funcall(relation_table_from_wrapper(self), id_select, 1, projections);
 }
 
-VALUE relation_table_where_wrapper(VALUE self, VALUE conditions) {
+static VALUE relation_table_where_wrapper(VALUE self, VALUE conditions) {
 	return rb_funcall(relation_table_from_wrapper(self), id_where, 1, conditions);
 }
 
-VALUE relation_table_order_wrapper(VALUE self, VALUE expression) { 
+static VALUE relation_table_order_wrapper(VALUE self, VALUE expression) { 
 	return rb_funcall(relation_table_from_wrapper(self), id_order, 1, expression);
 }
 
-VALUE relation_table_offset_wrapper(VALUE self, VALUE offset_number) {
+static VALUE relation_table_offset_wrapper(VALUE self, VALUE offset_number) {
 	return rb_funcall(relation_table_from_wrapper(self), id_offset, 1, offset_number);
 }
 
-VALUE relation_table_group_wrapper(VALUE self, VALUE expression) {
+static VALUE relation_table_group_wrapper(VALUE self, VALUE expression) {
 	return rb_funcall(relation_table_from_wrapper(self), id_group, 1, expression);
 }
 
-VALUE relation_table_having_wrapper(VALUE self, VALUE expression) {
+static VALUE relation_table_having_wrapper(VALUE self, VALUE expression) {
 	return rb_funcall(relation_table_from_wrapper(self), id_having, 1, expression);
 }
 
@@ -105,7 +105,6 @@ static VALUE relation_table_alias_table_wrapper(VALUE self) {
 	Data_Get_Struct(self, RelationTable, table);
 	return rb_str_new2(table->table_alias);
 }
-
 
 void Init_relation_table() {
 	class_Table = rb_define_class_under(module_Relation, "Table", rb_cObject);
